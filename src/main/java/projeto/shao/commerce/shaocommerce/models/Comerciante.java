@@ -13,7 +13,7 @@ public class Comerciante {
 	@Override
 	public String toString() {
 		return "Comerciante [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", nomeImagem="
-				+ NomeImg +", numWhats="+numWhats  +"]";
+				+ nomeImg +", numWhats="+numWhats  +"]";
 	}
 
 	@Id
@@ -25,7 +25,15 @@ public class Comerciante {
 	private String email;
 	private String senha;
 	private String numWhats;
+	private String nomeImg;
 
+	public String getNomeImg() {
+		return nomeImg;
+	}
+
+	public void setNomeImg(String nomeImg) {
+		this.nomeImg = nomeImg;
+	}
 
 	public String getNumWhats() {
 		return numWhats;
@@ -33,18 +41,6 @@ public class Comerciante {
 
 	public void setNumWhats(String numWhats) {
 		this.numWhats = numWhats;
-	}
-
-	private String NomeImg;
-
-	
-
-	public String getNomeImagem() {
-		return NomeImg;
-	}
-
-	public void setNomeImagem(String nomeImagem) {
-		this.NomeImg = nomeImagem;
 	}
 
 	public Long getId() {

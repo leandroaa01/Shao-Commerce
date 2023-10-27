@@ -1,18 +1,22 @@
 package projeto.shao.commerce.shaocommerce.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,28 +41,29 @@ public class comerciantesControllers {
 	public String cadastrarComerciante(Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
 		cr.save(comerciante);
-		
+
 		try {
 			if (!arquivo.isEmpty()) {
 				byte[] bytes = arquivo.getBytes();
-				Path caminho = Paths.get(caminhoImagens +String.valueOf(comerciante.getId()) +arquivo.getOriginalFilename());
+				Path caminho = Paths
+						.get(caminhoImagens + String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
 				Files.write(caminho, bytes);
-				
-				comerciante.setNomeImagem(String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
+
+				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
 				cr.save(comerciante);
 				System.out.println("Caminho completo do arquivo: " + caminho);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Comerciante Salvo");
 
-		return "index";
+		return "redirect:/comerciantes";
 
 	}
 
-	@GetMapping("/comerciantes")
+	@GetMapping
 	public ModelAndView listar() {
 		List<Comerciante> comerciantes = cr.findAll();
 		ModelAndView mv = new ModelAndView("index");
@@ -66,5 +71,36 @@ public class comerciantesControllers {
 
 		return mv;
 	}
+
+	@GetMapping("/{id}")
+	public ModelAndView verProdutos(@PathVariable Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Comerciante> opt = cr.findById(id);
+
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+		md.setViewName("/produtos");
+		Comerciante comerciante = opt.get();
+
+		md.addObject("comerciante", comerciante);
+
+		return md;
+	}
+	@GetMapping("/comerciantes/mostrarImagem/{imagem}")
+	@ResponseBody
+	public byte[] retornarImagem(@PathVariable("imagem") String imagem) throws IOException{
+		
+		File imagemArquivo = new File(caminhoImagens+imagem);
+
+	if(imagem!=null){
+
+		return Files.readAllBytes(imagemArquivo.toPath());
+		
+	}
+		return null;
+	}
+
 
 }
