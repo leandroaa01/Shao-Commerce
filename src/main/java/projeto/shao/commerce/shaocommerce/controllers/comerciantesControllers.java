@@ -40,7 +40,7 @@ public class comerciantesControllers {
 	@PostMapping
 	public String cadastrarComerciante(Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
-		cr.save(comerciante);
+		cr.saveAndFlush(comerciante);
 
 		try {
 			if (!arquivo.isEmpty()) {
@@ -50,7 +50,7 @@ public class comerciantesControllers {
 				Files.write(caminho, bytes);
 
 				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
-				cr.save(comerciante);
+				cr.saveAndFlush(comerciante);
 				System.out.println("Caminho completo do arquivo: " + caminho);
 			}
 		} catch (IOException e) {
@@ -91,11 +91,10 @@ public class comerciantesControllers {
 	@GetMapping("/comerciantes/mostrarImagem/{imagem}")
 	@ResponseBody
 	public byte[] retornarImagem(@PathVariable("imagem") String imagem) throws IOException{
-		
 		File imagemArquivo = new File(caminhoImagens+imagem);
 
-	if(imagem!=null){
-
+	if(imagem!=null || imagem.trim().length()> 0){
+ 
 		return Files.readAllBytes(imagemArquivo.toPath());
 		
 	}
