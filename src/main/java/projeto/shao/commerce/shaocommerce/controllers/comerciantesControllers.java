@@ -27,7 +27,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 @RequestMapping("/comerciantes")
 public class comerciantesControllers {
 
-	private static String caminhoImagens = "C:\\Users\\70204923476\\Documents\\Imagens\\";
+	private static String caminhoImagens = "D:\\Usuario\\Área de Trabalho\\pedro\\shaoC\\src\\main\\resources\\static\\upload\\";
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -39,29 +39,29 @@ public class comerciantesControllers {
 
 	@PostMapping
 	public String cadastrarComerciante(Comerciante comerciante, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo) {
-		cr.saveAndFlush(comerciante);
+        @RequestParam("file") MultipartFile arquivo) {
+    cr.saveAndFlush(comerciante);
 
-		try {
-			if (!arquivo.isEmpty()) {
-				byte[] bytes = arquivo.getBytes();
-				Path caminho = Paths
-						.get(caminhoImagens + String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
-				Files.write(caminho, bytes);
+    try {
+        if (!arquivo.isEmpty()) {
+            byte[] bytes = arquivo.getBytes();
+            String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
+            Path caminho = Paths.get(caminhoImagens + nomeOriginal); // Use o nome original do arquivo
+            Files.write(caminho, bytes);
 
-				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + arquivo.getOriginalFilename());
-				cr.saveAndFlush(comerciante);
-				System.out.println("Caminho completo do arquivo: " + caminho);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            comerciante.setNomeImg(nomeOriginal); // Defina o nome da imagem como o nome original
+            cr.saveAndFlush(comerciante);
+            System.out.println("Caminho completo do arquivo: " + caminho);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 
-		System.out.println("Comerciante Salvo");
+    System.out.println("Comerciante Salvo");
 
-		return "redirect:/comerciantes";
+    return "redirect:/comerciantes";
+}
 
-	}
 
 	@GetMapping
 	public ModelAndView listar() {
@@ -88,18 +88,7 @@ public class comerciantesControllers {
 
 		return md;
 	}
-	@GetMapping("/comerciantes/mostrarImagem/{imagem}")
-	@ResponseBody
-	public byte[] retornarImagem(@PathVariable("imagem") String imagem) throws IOException{
-		File imagemArquivo = new File(caminhoImagens+imagem);
-
-	if(imagem!=null || imagem.trim().length()> 0){
- 
-		return Files.readAllBytes(imagemArquivo.toPath());
-		
-	}
-		return null;
-	}
+	
 
 
 }
