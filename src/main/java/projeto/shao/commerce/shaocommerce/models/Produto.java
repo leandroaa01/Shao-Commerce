@@ -59,6 +59,8 @@ public class Produto {
     public void setNomeImg(String nomeImg) {
         this.nomeImg = nomeImg;
     }
+    public void setComerciante(Comerciante comerciante2) {
+    }
     
 
 }

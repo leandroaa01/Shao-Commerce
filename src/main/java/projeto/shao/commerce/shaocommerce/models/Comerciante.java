@@ -27,6 +27,10 @@ public class Comerciante {
 	private String numWhats;
 	private String nomeImg;
 
+	public String caminhoImg(){
+		return getNomeImg();
+	}
+
 	public String getNomeImg() {
 		return nomeImg;
 	}

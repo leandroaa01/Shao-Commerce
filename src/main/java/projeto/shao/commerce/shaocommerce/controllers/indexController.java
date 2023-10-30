@@ -1,4 +1,5 @@
 package projeto.shao.commerce.shaocommerce.controllers;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,15 @@ public class indexController {
         System.out.println("Chamou o Controller!");
         return "redirect:/comerciantes";
     }
+
     @GetMapping("/form")
-	public String form() {
-		return "cadastros/formProdutos";
-	}
+    public String form() {
+        return "cadastros/form";
+    }
+
+    @GetMapping("/form/produtos")
+    public String formProduto() {
+        return "cadastros/formProdutos";
+    }
+
 }
