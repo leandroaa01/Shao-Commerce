@@ -13,6 +13,6 @@ public class indexController {
     }
     @GetMapping("/form")
 	public String form() {
-		return "cadastros/form";
+		return "cadastros/formProdutos";
 	}
 }

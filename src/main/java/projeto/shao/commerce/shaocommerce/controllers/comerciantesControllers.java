@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
+import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 
 @Controller
@@ -100,6 +101,21 @@ public class comerciantesControllers {
 	}
 		return null;
 	}
+		@PostMapping("/{idComerciante}")
+		public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto){
+			System.out.println("Id do comerciante:" +idComerciante);
+			
+			Optional<Comerciante> opt = cr.findById(idComerciante);
+			if(opt.isEmpty()){
+				return "redirect:/comerciantes";
+			}
+			Comerciante comerciante = opt.get();
 
+			produto.setComerciante(comerciante);
+
+			
+			return "redirect:/comerciante/" +idComerciante;
+
+		}
 
 }
