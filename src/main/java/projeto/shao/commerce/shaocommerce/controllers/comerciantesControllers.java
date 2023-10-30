@@ -1,6 +1,5 @@
 package projeto.shao.commerce.shaocommerce.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +25,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 @RequestMapping("/comerciantes")
 public class comerciantesControllers {
 
-	private static String caminhoImagens = "D:\\Usuario\\Área de Trabalho\\pedro\\shaoC\\src\\main\\resources\\static\\upload\\";
+	private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\pedro\\shaoC\\src\\main\\resources\\static\\Upload\\";
 
 	@Autowired
 	private ComercianteRepository cr;
