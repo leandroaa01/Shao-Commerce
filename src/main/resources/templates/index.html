@@ -30,11 +30,11 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${c.nome}">Pedro</h5>
-                                <p> E-mail: <span th:text="${c.email}"></span></p>
-                                <p> Whatsapp:<span class="card-text" th:text="${c.numWhats}"></span></p>
+                                <p> <i class="bi bi-envelope-at"></i> : <span th:text="${c.email}"></span></p>
+                                <p> <i class="bi bi-whatsapp"></i> : <span class="card-text" th:text="${c.numWhats}"></span></p>
 
                                 <div style="text-align: right;">
-                                    <a th:href="@{/comerciantes/{id}(id=${c.id})}">Ver Produtos</a>
+                                   <button type="button" class="btn btn-success"><a th:href="@{/comerciantes/{id}(id=${c.id})}" class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Produtos <i class="bi bi-cart"></i></a></button> 
                                 </div>
                             </div>
                         </div>

@@ -28,6 +28,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 public class comerciantesControllers {
 
 	private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
+	private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -42,29 +43,31 @@ public class comerciantesControllers {
 
 	@PostMapping
 	public String cadastrarComerciante(Comerciante comerciante, BindingResult result,
-        @RequestParam("file") MultipartFile arquivo) {
-    cr.saveAndFlush(comerciante);
+			@RequestParam("file") MultipartFile arquivo) {
+		cr.saveAndFlush(comerciante);
 
-    try {
-        if (!arquivo.isEmpty()) {
-            byte[] bytes = arquivo.getBytes();
-            String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-            Path caminho = Paths.get(caminhoImagens + nomeOriginal); // Use o nome original do arquivo
-            Files.write(caminho, bytes);
+		try {
+			if (!arquivo.isEmpty() && arquivo != null) {
+				byte[] bytes = arquivo.getBytes();
+				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
+				Path caminho = Paths.get(caminhoImagens + nomeOriginal); // Use o nome original do arquivo
+				Files.write(caminho, bytes);
 
-            comerciante.setNomeImg(nomeOriginal); // Defina o nome da imagem como o nome original
-            cr.saveAndFlush(comerciante);
-            System.out.println("Caminho completo do arquivo: " + caminho);
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+				comerciante.setNomeImg(nomeOriginal); // Defina o nome da imagem como o nome original
+				cr.saveAndFlush(comerciante);
+				System.out.println("Caminho completo do arquivo: " + caminho);
+			}else{
+				comerciante.setNomeImg("perfilNulo.png");
+				cr.save(comerciante);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    System.out.println("Comerciante Salvo");
+		System.out.println("Comerciante Salvo");
 
-    return "redirect:/comerciantes";
-}
-
+		return "redirect:/comerciantes";
+	}
 
 	@GetMapping
 	public ModelAndView listar() {
@@ -91,23 +94,43 @@ public class comerciantesControllers {
 
 		return md;
 	}
+
 	@PostMapping("/{idComerciante}")
-		public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto){
-			System.out.println("Id do comerciante:" +idComerciante);
-			
-			Optional<Comerciante> opt = cr.findById(idComerciante);
-			if(opt.isEmpty()){
-				return "redirect:/comerciantes";
+	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
+			@RequestParam("file") MultipartFile arquivo) {
+
+		Optional<Comerciante> opt = cr.findById(idComerciante);
+		if (opt.isEmpty()) {
+			return "redirect:/comerciantes";
+		}
+		Comerciante comerciante = opt.get();
+
+		produto.setComerciante(comerciante);
+
+		pr.save(produto);
+		try {
+			if (!arquivo.isEmpty()) {
+				byte[] bytes = arquivo.getBytes();
+				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
+				Path caminho = Paths.get(caminhoImagensProduto + nomeOriginal); // Use o nome original do arquivo
+				Files.write(caminho, bytes);
+
+				produto.setNomeImg(nomeOriginal); // Define o nome da imagem como o nome original
+				pr.saveAndFlush(produto);
+				System.out.println("Caminho completo do arquivo: " + caminho);
 			}
-			Comerciante comerciante = opt.get();
-
-			produto.setComerciante(comerciante);
-
-			pr.save(produto);
-			
-			return "redirect:/comerciantes/{idComerciante}";
-
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
+		System.out.println("Comerciante Salvo");
+
+		System.out.println("Id do comerciante:" + idComerciante);
+
+		
+
+		return "redirect:/comerciantes/";
+
+	}
 
 }

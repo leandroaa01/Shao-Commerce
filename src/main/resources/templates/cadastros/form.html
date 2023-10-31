@@ -18,22 +18,24 @@
 				<h1>Faça seu Cadastro</h1>
 				<form action="/comerciantes"  enctype="multipart/form-data"  method="post">
 					<div class="form-floating mb-3">
-						<input type="text" name="nome" class="form-control" id="" placeholder="Nome">
+						<input type="text" name="nome" class="form-control"  placeholder="Nome" required>
 						<label for="validationCustom01">Nome</label>
 					</div>
-					<div class="form-floating mb-3">
-						<input type="tel" name="numWhats" class="form-control" id="" placeholder="Whatsapp">
-						<label for="validationCustom01">Whatsapp</label>
+					<div class=" mb-3">
+						<label class="form-label" for="validationCustom01"> Whatsapp</label>
+						<input type="tel" name="numWhats" class="form-control"  placeholder="(DD) 9 9999-9999"  pattern="[\d()\-]+" required>
+						
 					</div>
 
 					<div class="form-floating mb-3">
-						<input type="email" name="email" class="form-control" id="" placeholder="E-mail">
-						<label for="floatingInput">E-mail</label>
+						<input type="email" name="email" class="form-control"  placeholder="E-mail" required>
+						<label >E-mail</label>
 					</div>
  
 					<div class="form-floating">
-						<input type="password" name="senha" class="form-control" id="" placeholder="Senha">
-						<label for="floatingPassword">Senha</label>
+						<input type="password" name="senha" class="form-control" minlength="8" placeholder="Senha" required>
+						<label>Senha</label>
+						<div class="form-text">A senha deve conter no mínimo 8 caracteres</div>
 					</div>
 					<br>
 					
@@ -58,6 +60,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 		crossorigin="anonymous"></script>
+
+		
+		  
 </body>
 
 </html>
