@@ -33,8 +33,12 @@
                                 <p> <i class="bi bi-envelope-at"></i> : <span th:text="${c.email}"></span></p>
                                 <p> <i class="bi bi-whatsapp"></i> : <span class="card-text" th:text="${c.numWhats}"></span></p>
 
-                                <div style="text-align: right;">
+                                <div style="text-align: left;">
                                    <button type="button" class="btn btn-success"><a th:href="@{/comerciantes/{id}(id=${c.id})}" class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Produtos <i class="bi bi-cart"></i></a></button> 
+                                </div>
+                                <div style="text-align: right;"> 
+                                   <a th:href="@{/comerciantes/{id}/remover(id=${c.id})}"><i class="bi bi-trash-fill"></i></a>
+                                
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\70204923476\workspaces\shaocommerce"/>
 			<item value="C:\Users\70204923476\workspaces\shaocommerce\src"/>
 		</list>
 		<list key="projectNameTemplate">
