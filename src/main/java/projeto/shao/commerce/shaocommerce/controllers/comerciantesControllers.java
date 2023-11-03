@@ -133,4 +133,21 @@ public class comerciantesControllers {
 
 	}
 
+	@GetMapping("/{id}/remover")
+	public String apagarComerciante(@PathVariable Long id){
+
+		Optional<Comerciante> opt = cr.findById(id);
+
+		if(!opt.isEmpty()){
+			Comerciante comerciante = opt.get();
+		
+			List<Produto> produtos = pr.findByComerciante(comerciante);
+			pr.deleteAll(produtos);
+			cr.delete(comerciante);
+	
+		}
+		return "redirect:/comerciantes";
+	}
+
+
 }
