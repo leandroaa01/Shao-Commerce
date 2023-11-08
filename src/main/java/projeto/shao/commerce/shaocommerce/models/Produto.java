@@ -59,8 +59,27 @@ public class Produto {
     public void setNomeImg(String nomeImg) {
         this.nomeImg = nomeImg;
     }
-    public void setComerciante(Comerciante comerciante2) {
+    public Long getId() {
+        return id;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Comerciante getComerciante() {
+        return comerciante;
+    }
+    public void setComerciante(Comerciante comerciante) {
+        this.comerciante = comerciante;
+    }
+    @Override
+    public String toString() {
+        return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco + ", categoria="
+                + categoria + ", horarioVenda=" + horarioVenda + ", nomeImg=" + nomeImg + ", comerciante=" + comerciante
+                + "]";
+    }
+    public String caminhoImg(){
+		return getNomeImg();
+	}
     
 
 }

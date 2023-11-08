@@ -14,12 +14,9 @@
 <body style="background-color:honeydew;">
     <div th:replace="~{menu :: menu}"></div>
     <div class="container mt-5">
+        
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h1>Vendedores</h1>
-            </div>
-        </div>
-        <div class="row">
+            
             <div class="col-md-4" th:each="c : ${comerciantes}">
                 <div class="card mb-3" style="min-width:200px; ">
                     <div class="row g-0">
@@ -33,17 +30,28 @@
                                 <p> <i class="bi bi-envelope-at"></i> : <span th:text="${c.email}"></span></p>
                                 <p> <i class="bi bi-whatsapp"></i> : <span class="card-text" th:text="${c.numWhats}"></span></p>
 
-                                <div style="text-align: left;">
-                                   <button type="button" class="btn btn-success"><a th:href="@{/comerciantes/{id}(id=${c.id})}" class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Produtos <i class="bi bi-cart"></i></a></button> 
+                                <div >
+                                   <button type="button" class="btn btn-warning"><a th:href="@{/comerciantes/{id}(id=${c.id})}" 
+                                    class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Ver Produtos <i class="bi bi-eye"></i></a></button> 
                                 </div>
+                                <p></p>
+                                <div>                          
+                                    <button type="button" class="btn btn-success"><a th:href="@{/comerciantes/{id}/produtos (id=${c.id})}" 
+                                        class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Add Produtos <i class="bi bi-plus-lg"></i></a></button> 
+                                 </div>
+                                
                                 <div style="text-align: right;"> 
                                    <a th:href="@{/comerciantes/{id}/remover(id=${c.id})}"><i class="bi bi-trash-fill"></i></a>
+                                   <a th:href="@{/comerciantes/{id}/selecionar(id=${c.id})}"><i class="bi bi-pen-fill"></i></a>
                                 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div th:if="${#lists.isEmpty(comerciantes)}">
+                <h1 style="text-align: center;" >Nenhum Comerciante cadastrado</h1>
             </div>
         </div>
     </div>

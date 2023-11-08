@@ -15,34 +15,35 @@
 	<div th:replace="~{menu :: menu}"></div>
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
-				<h1>Faça seu Cadastro</h1>
+				<h1 style="text-align: center;">Faça seu Cadastro</h1>
 				<form action="/comerciantes"  enctype="multipart/form-data"  method="post">
+					
 					<div class="form-floating mb-3">
-						<input type="text" name="nome" class="form-control"  placeholder="Nome" required>
+						<input type="text" name="nome" class="form-control"  placeholder="Nome"  required>
 						<label for="validationCustom01">Nome</label>
 					</div>
 					<div class=" mb-3">
-						<label class="form-label" for="validationCustom01"> Whatsapp</label>
-						<input type="tel" name="numWhats" class="form-control"  placeholder="(DD) 9 9999-9999"  pattern="[\d()\-]+" required>
-						
+						<label class="form-label" > Whatsapp</label>
+						<input type="tel" name="numWhats"  class="form-control"  placeholder="DD + Número" maxlength="11" minlength="11"  required>
+						<div class="form-text">Ex: (84)98765-4321</div>
 					</div>
 
 					<div class="form-floating mb-3">
-						<input type="email" name="email" class="form-control"  placeholder="E-mail" required>
+						<input type="email" name="email" class="form-control"  placeholder="E-mail"  required>
 						<label >E-mail</label>
 					</div>
  
 					<div class="form-floating">
 						<input type="password" name="senha" class="form-control" minlength="8" placeholder="Senha" required>
 						<label>Senha</label>
-						<div class="form-text">A senha deve conter no mínimo 8 caracteres</div>
+						
 					</div>
 					<br>
 					
 					<br>
 					<div class="input-group mb-3">
-						<input type="file" name="file" class="form-control" id="inputGroupFile02">
-						<label class="input-group-text" for="inputGroupFile02">Foto de Perfil</label>
+						<input type="file" name="file" class="form-control"  >
+						<label class="input-group-text">Foto de Perfil</label>
 					</div>
 					<br>
 					
@@ -51,7 +52,7 @@
 					</div>
 
 			</form>
-
+			
 
 
 
