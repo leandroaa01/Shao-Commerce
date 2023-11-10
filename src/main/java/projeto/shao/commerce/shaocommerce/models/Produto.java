@@ -1,5 +1,7 @@
 package projeto.shao.commerce.shaocommerce.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,7 @@ public class Produto {
     private String descricao;
     private double preco;
     private String categoria;
-    private String horarioVenda;
+    private LocalDateTime horarioVenda;
     private String nomeImg;
 
     @ManyToOne
@@ -47,10 +49,10 @@ public class Produto {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    public String getHorarioVenda() {
+    public LocalDateTime getHorarioVenda() {
         return horarioVenda;
     }
-    public void setHorarioVenda(String horarioVenda) {
+    public void setHorarioVenda(LocalDateTime horarioVenda) {
         this.horarioVenda = horarioVenda;
     }
     public String getNomeImg() {

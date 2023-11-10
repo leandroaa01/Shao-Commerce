@@ -128,6 +128,9 @@ public class comerciantesControllers {
 				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); // Define o nome da imagem como o nome original
 				pr.save(produto);
 				System.out.println("Caminho completo do arquivo: " + caminho);
+			}else{
+				produto.setNomeImg("imgPadrao.png");
+				pr.save(produto);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -139,7 +142,7 @@ public class comerciantesControllers {
 
 		
 
-		return "redirect:/comerciantes/ +{idComerciante}";
+		return "redirect:/comerciantes/{idComerciante}";
 
 	}
 
@@ -149,15 +152,29 @@ public class comerciantesControllers {
 		Optional<Comerciante> opt = cr.findById(id);
 
 		if(!opt.isEmpty()){
-			Comerciante comerciante = opt.get();
+				Comerciante comerciante = opt.get();
+			
+				List<Produto> produtos = pr.findByComerciante(comerciante);
+
+				for (Produto produto : produtos) {
+					String nomeImagem = produto.getNomeImg();
+					if (nomeImagem != null && !nomeImagem.equals("imgPadrao.png")) {
+						try {
+							Files.deleteIfExists(Paths.get(caminhoImagensProduto + nomeImagem));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+
+
+				pr.deleteAll(produtos);
+				cr.delete(comerciante);
 		
-			List<Produto> produtos = pr.findByComerciante(comerciante);
-			pr.deleteAll(produtos);
-			cr.delete(comerciante);
-	
+		}
 		}
 		return "redirect:/comerciantes";
 	}
+
 	@GetMapping("/{idComerciante}/produtos/{idProduto}/apagar")
 	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
 
