@@ -35,6 +35,7 @@ public class comerciantesControllers {
 
 	@Autowired
 	private ProdutoRepository pr;
+	
 
 	@GetMapping("/form")
 	public String cadastro(Comerciante comerciante) {
@@ -44,7 +45,7 @@ public class comerciantesControllers {
 	@PostMapping
 	public String salvarComerciante(Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
-		cr.saveAndFlush(comerciante);
+		cr.save(comerciante);
 
 		try {
 			if (!arquivo.isEmpty() && arquivo != null) {
@@ -80,7 +81,7 @@ public class comerciantesControllers {
 
 
 	@GetMapping("/{id}")
-	public ModelAndView verProdutos(@PathVariable Long id) {
+	public ModelAndView verProdutos(@PathVariable Long id, Produto produto) {
 		Optional<Comerciante> opt = cr.findById(id);
 		ModelAndView md = new ModelAndView();
 		
@@ -190,7 +191,7 @@ public class comerciantesControllers {
 	        }
 	    }
 
-	    return "redirect:/Comerciantes/" + idComerciante;
+	    return "redirect:/comerciantes/{idComerciante}";
 	}
 	@GetMapping("/{id}/selecionar")
 	public ModelAndView selecionarComerciante(@PathVariable Long id){
@@ -201,7 +202,34 @@ public class comerciantesControllers {
 			return md;
 		}
 		Comerciante comerciante = opt.get();
-		md.setViewName("comerciantes/form");
+		md.setViewName("cadastros/form");
+		md.addObject("comerciante", comerciante);
+
+		return md;
+	}
+
+	@GetMapping("/{idComerciante}/produtos/{idProduto}/selecionar")
+	public ModelAndView selecionarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto){
+
+		ModelAndView md = new ModelAndView();
+		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
+		Optional<Produto> optProduto = pr.findById(idProduto);
+
+		if (optComerciante.isEmpty() || optProduto.isEmpty()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+
+		Comerciante comerciante = optComerciante.get();
+		Produto produto = optProduto.get();
+
+		if (comerciante.getId() != produto.getComerciante().getId()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+
+		md.setViewName("cadastros/formProdutos");
+		md.addObject("produto", produto);
 		md.addObject("comerciante", comerciante);
 
 		return md;

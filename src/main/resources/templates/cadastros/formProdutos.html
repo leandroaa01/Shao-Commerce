@@ -18,12 +18,16 @@
 				<h1>Adicionar Produto</h1>
 				<form th:action="@{'/comerciantes/' + ${id} + '/produtos'}"  enctype="multipart/form-data"  method="post">
 					<div class="form-floating mb-3">
-						<input type="text" name="nome" class="form-control" placeholder="Nome do Produto" required>
+						<input type="hidden" name="id" th:value="${produto.id}" class="form-control" placeholder="Nome do Produto" readonly="readonly">
+						
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" name="nome" th:value="${produto.nome}" class="form-control" placeholder="Nome do Produto" required>
 						<label for="validationCustom01">Nome do Produto</label>
 					</div>
 					<div class="col-md-4">
 						<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
-						<select class="form-select" name="categoria" required>
+						<select class="form-select" name="categoria" th:value="${produto.categoria}" required>
 							<option selected>Categoria do Produto</option>
 							<option value="Alimento">Alimento</option>
 							<option value="Vestuario">Vestuário</option>
@@ -35,21 +39,25 @@
 					<br>
 					<div class="col-md-2">
 						<label for="form-label"><strong>Preço</strong></label>
-						<input type="number" step="0.01" name="preco" class="form-control"  placeholder="R$" required>
+						<input type="number" step="0.01" name="preco" th:value="${produto.preco}" class="form-control"  placeholder="R$" required>
 						
 					</div>
 					<br>
 					<div class="form-floating mb-3">
-						<input type="text" name="descricao" class="form-control" maxlength="275" placeholder="Descrição" style="height: 100px" required>
+						<input type="text" name="descricao" class="form-control" th:value="${produto.descricao}" maxlength="275" placeholder="Descrição" style="height: 100px" required>
 						<label class="form-label" for="floatingInput">Descrição</label>
 						<div class="form-text">Limite máximo de 255 caracteres</div>
 					</div>
  
 					<div class="form-floating">
-						<input type="datetime-local" name="horarioVenda" class="form-control"  placeholder="Horário de Venda" required>
-						<label for="">Horário de Venda</label>
+						<input type="date" name="dataVenda" class="form-control" th:value="${produto.dataVenda}"  placeholder="Data de venda" required>
+						<label for="">Data de venda</label>
 					</div>
 					<br>
+					<div class="form-floating">
+						<input type="time" name="horario" class="form-control" th:value="${produto.horario}"  placeholder="Horário de Venda" required>
+						<label for="">Horário de Venda</label>
+					</div>
 					
 					<br>
 					<div class="input-group mb-3">
