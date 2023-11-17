@@ -8,6 +8,24 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		#icon {
+  position: absolute;
+  top: 45%;
+  right: 20px;
+  transform: translateY(-50%);
+  background: url("img/i.png");
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#icon.ver {
+  background: url("img/ii.png");
+  background-size: cover;  
+}
+	</style>
 	<title>Cadastre-se</title>
 </head>
 
@@ -36,10 +54,22 @@
 					</div>
 					
 					<div class="form-floating col">
-						<input type="password" name="senha" class="form-control" minlength="8" th:value="${comerciante.senha}" placeholder="Senha" required>
+						<input type="password" name="senha" class="form-control" minlength="8" th:value="${comerciante.senha}" placeholder="Senha" id="senha" required> <i  id="icon" onclick="mostraSenha()"></i>
 						<label>Senha</label>
 						
 					</div>
+				     <script>
+						const senha = document.getElementById('senha');
+						const icon = document.getElementById('icon');
+						
+						function mostraSenha() {
+						if (senha.type === 'password') {
+							senha.setAttribute('type', 'text');
+							icon.classList.add('ver');
+						} else {
+							senha.setAttribute('type', 'password');
+							icon.classList.remove('ver');}}
+					 </script>
 					<br>
 					
 					<br>

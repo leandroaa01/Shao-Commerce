@@ -27,8 +27,8 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 @RequestMapping("/comerciantes")
 public class comerciantesControllers {
 
-	private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
-	private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
+	private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\pedro\\shaoC\\src\\main\\resources\\static\\upload\\";
+	private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\pedro\\shaoC\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -102,15 +102,18 @@ public class comerciantesControllers {
 	}
 
 	@PostMapping("/{idComerciante}/produtos")
-	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
+	public ModelAndView cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
+				
+		ModelAndView mv = new ModelAndView();
 		System.out.println("Id do comerciante:" + idComerciante);
-	System.out.println(produto);
+		System.out.println(produto);
 
 		Optional<Comerciante> opt = cr.findById(idComerciante);
 
 		if (opt.isEmpty()) {
-			return "redirect:/comerciantes";
+			mv.setViewName("redirect:/comerciantes");
+			return mv;
 		}
 
 		Comerciante comerciante = opt.get();
@@ -139,11 +142,8 @@ public class comerciantesControllers {
 
 		System.out.println("Produto Salvo");
 
-		
-
-		
-
-		return "redirect:/comerciantes/{idComerciante}";
+		mv.setViewName("redirect:/comerciantes/{idComerciante}");
+		return mv;
 
 	}
 

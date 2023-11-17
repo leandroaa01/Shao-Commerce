@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
-
+import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 
 @Controller
@@ -30,11 +30,11 @@ public class indexController {
 	private ComercianteRepository cr;
 
     @GetMapping("/comerciantes/{id}/produtos")
-    public ModelAndView formProduto(@PathVariable Long id) {
-        List<Comerciante> comerciantes = cr.findAll();
+    public ModelAndView formProduto(@PathVariable Long id, Produto produto) {
+        List<Comerciante> comerciante = cr.findAll();
         ModelAndView mv = new ModelAndView("cadastros/formProdutos");
-		mv.addObject("comerciantes", comerciantes);
-        mv.addObject("idComerciante", id);
+        mv.addObject("comerciante", comerciante);
+        mv.addObject("produto", produto);
 
 		return mv;
     }

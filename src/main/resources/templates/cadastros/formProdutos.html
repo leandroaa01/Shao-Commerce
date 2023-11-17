@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
 				<h1>Adicionar Produto</h1>
-				<form th:action="@{'/comerciantes/' + ${id} + '/produtos'}"  enctype="multipart/form-data"  method="post">
+				<form th:action="@{/comerciantes/{id}/produtos (id=${comerciante.id}) }"  enctype="multipart/form-data"  method="post">
 					<div class="form-floating mb-3">
 						<input type="hidden" name="id" th:value="${produto.id}" class="form-control" placeholder="Nome do Produto" readonly="readonly">
 						

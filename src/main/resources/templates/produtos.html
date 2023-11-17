@@ -32,7 +32,7 @@
                         <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
                         
                         <div style="text-align: right;">
-                        <a th:href="@{'https://wa.me/55' +${comerciante.numWhats}}" class="btn btn-success"><i class="bi bi-whatsapp"></i></a>
+                        <a th:href="@{'https://wa.me/55' +${comerciante.numWhats}}" class="btn btn-success" target="_blank"><i class="bi bi-whatsapp"></i></a>
                         <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/apagar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-danger"><i class="bi bi-trash"></i></a>
                         <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/selecionar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
                         </div>
