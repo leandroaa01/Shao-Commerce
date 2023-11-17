@@ -228,7 +228,7 @@ public class comerciantesControllers {
 			return md;
 		}
 
-		md.setViewName("cadastros/formProdutos");
+		md.setViewName("cadastros/formProdutoEdit");
 		md.addObject("produto", produto);
 		md.addObject("comerciante", comerciante);
 
