@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
+
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 
 @Controller

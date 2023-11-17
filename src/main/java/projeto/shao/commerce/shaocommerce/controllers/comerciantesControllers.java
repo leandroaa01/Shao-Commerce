@@ -35,6 +35,7 @@ public class comerciantesControllers {
 
 	@Autowired
 	private ProdutoRepository pr;
+	
 
 	@GetMapping("/form")
 	public String cadastro(Comerciante comerciante) {
@@ -44,7 +45,7 @@ public class comerciantesControllers {
 	@PostMapping
 	public String salvarComerciante(Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
-		cr.saveAndFlush(comerciante);
+		cr.save(comerciante);
 
 		try {
 			if (!arquivo.isEmpty() && arquivo != null) {
@@ -80,7 +81,7 @@ public class comerciantesControllers {
 
 
 	@GetMapping("/{id}")
-	public ModelAndView verProdutos(@PathVariable Long id) {
+	public ModelAndView verProdutos(@PathVariable Long id, Produto produto) {
 		Optional<Comerciante> opt = cr.findById(id);
 		ModelAndView md = new ModelAndView();
 		
@@ -128,6 +129,9 @@ public class comerciantesControllers {
 				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); // Define o nome da imagem como o nome original
 				pr.save(produto);
 				System.out.println("Caminho completo do arquivo: " + caminho);
+			}else{
+				produto.setNomeImg("imgPadrao.png");
+				pr.save(produto);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -139,7 +143,7 @@ public class comerciantesControllers {
 
 		
 
-		return "redirect:/comerciantes/ +{idComerciante}";
+		return "redirect:/comerciantes/{idComerciante}";
 
 	}
 
@@ -149,15 +153,29 @@ public class comerciantesControllers {
 		Optional<Comerciante> opt = cr.findById(id);
 
 		if(!opt.isEmpty()){
-			Comerciante comerciante = opt.get();
+				Comerciante comerciante = opt.get();
+			
+				List<Produto> produtos = pr.findByComerciante(comerciante);
+
+				for (Produto produto : produtos) {
+					String nomeImagem = produto.getNomeImg();
+					if (nomeImagem != null && !nomeImagem.equals("imgPadrao.png")) {
+						try {
+							Files.deleteIfExists(Paths.get(caminhoImagensProduto + nomeImagem));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+
+
+				pr.deleteAll(produtos);
+				cr.delete(comerciante);
 		
-			List<Produto> produtos = pr.findByComerciante(comerciante);
-			pr.deleteAll(produtos);
-			cr.delete(comerciante);
-	
+		}
 		}
 		return "redirect:/comerciantes";
 	}
+
 	@GetMapping("/{idComerciante}/produtos/{idProduto}/apagar")
 	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
 
@@ -173,7 +191,7 @@ public class comerciantesControllers {
 	        }
 	    }
 
-	    return "redirect:/Comerciantes/" + idComerciante;
+	    return "redirect:/comerciantes/{idComerciante}";
 	}
 	@GetMapping("/{id}/selecionar")
 	public ModelAndView selecionarComerciante(@PathVariable Long id){
@@ -184,7 +202,34 @@ public class comerciantesControllers {
 			return md;
 		}
 		Comerciante comerciante = opt.get();
-		md.setViewName("comerciantes/form");
+		md.setViewName("cadastros/form");
+		md.addObject("comerciante", comerciante);
+
+		return md;
+	}
+
+	@GetMapping("/{idComerciante}/produtos/{idProduto}/selecionar")
+	public ModelAndView selecionarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto){
+
+		ModelAndView md = new ModelAndView();
+		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
+		Optional<Produto> optProduto = pr.findById(idProduto);
+
+		if (optComerciante.isEmpty() || optProduto.isEmpty()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+
+		Comerciante comerciante = optComerciante.get();
+		Produto produto = optProduto.get();
+
+		if (comerciante.getId() != produto.getComerciante().getId()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+
+		md.setViewName("cadastros/formProdutos");
+		md.addObject("produto", produto);
 		md.addObject("comerciante", comerciante);
 
 		return md;

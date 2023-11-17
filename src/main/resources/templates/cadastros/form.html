@@ -17,24 +17,26 @@
 			<div class="col-md-6 offset-md-3">
 				<h1 style="text-align: center;">Faça seu Cadastro</h1>
 				<form action="/comerciantes"  enctype="multipart/form-data"  method="post">
-					
 					<div class="form-floating mb-3">
-						<input type="text" name="nome" class="form-control"  placeholder="Nome"  required>
+						<input type="hidden" name="id" class="form-control" th:value="${comerciante.id}" readonly="readonly">
+					</div>
+					<div class="form-floating mb-3">
+						<input type="text" name="nome" class="form-control" th:value="${comerciante.nome}"  placeholder="Nome"  required>
 						<label for="validationCustom01">Nome</label>
 					</div>
 					<div class=" mb-3">
-						<label class="form-label" > Whatsapp</label>
-						<input type="tel" name="numWhats"  class="form-control"  placeholder="DD + Número" maxlength="11" minlength="11"  required>
+						<label class="form-label" ><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
+						<input type="tel" name="numWhats"  class="form-control"  placeholder="DD + Número" th:value="${comerciante.numWhats}" maxlength="11" minlength="11"  required>
 						<div class="form-text">Ex: (84)98765-4321</div>
 					</div>
 
 					<div class="form-floating mb-3">
-						<input type="email" name="email" class="form-control"  placeholder="E-mail"  required>
+						<input type="email" name="email" class="form-control"  placeholder="E-mail" th:value="${comerciante.email}"  required>
 						<label >E-mail</label>
 					</div>
- 
-					<div class="form-floating">
-						<input type="password" name="senha" class="form-control" minlength="8" placeholder="Senha" required>
+					
+					<div class="form-floating col">
+						<input type="password" name="senha" class="form-control" minlength="8" th:value="${comerciante.senha}" placeholder="Senha" required>
 						<label>Senha</label>
 						
 					</div>
