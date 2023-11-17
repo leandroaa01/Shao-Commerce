@@ -27,12 +27,12 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${p.nome}">Nome do Produto:</h5>
                         <p class="card-text"><b>Categoria:</b> <span th:text="${p.categoria}"></span> </p>
-                        <p class="card-text"><b> Horário de venda:</b> <span th:text="${p.horario}"></span></p>
-                        <p class="card-text"><b>Preço</b>: <span th:text="${p.preco}"></span></p>
+                        <p class="card-text"><b>Horário de venda:</b> <span th:text="${#temporals.format(p.dataVenda, 'dd/MM/yyyy')}"></span> às <span th:text="${p.horario}"></span> h</p>
+                        <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
                         <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
                         
                         <div style="text-align: right;">
-                        <a th:href="@{'https://wa.me/55' +${comerciante.numWhats}}" class="btn btn-success"><i class="bi bi-whatsapp"></i></a>
+                        <a th:href="@{'https://wa.me/55' +${comerciante.numWhats}}" class="btn btn-success"><i class="bi bi-whatsapp"></i> Whatsapp</a>
                         <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/apagar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-danger"><i class="bi bi-trash"></i></a>
                         <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/selecionar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
                         </div>
