@@ -13,70 +13,75 @@
 
 <body style="background-color:honeydew;">
 	<div th:replace="~{menu :: menu}"></div>
-		<div class="row">
-			<div class="col-md-6 offset-md-3">
-				<h1>Adicionar Produto</h1>
-				<form th:action="@{'/comerciantes/' + ${id} + '/produtos'}"  enctype="multipart/form-data"  method="post">
-					<div class="form-floating mb-3">
-						<input type="hidden" name="id" th:value="${produto.id}" class="form-control" placeholder="Nome do Produto" readonly="readonly">
-						
-					</div>
-					<div class="form-floating mb-3">
-						<input type="text" name="nome" th:value="${produto.nome}" class="form-control" placeholder="Nome do Produto" required>
-						<label for="validationCustom01">Nome do Produto</label>
-					</div>
-					<div class="col-md-4">
-						<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
-						<select class="form-select" name="categoria" th:value="${produto.categoria}" required>
-							<option selected>Categoria do Produto</option>
-							<option value="Alimento">Alimento</option>
-							<option value="Vestuario">Vestuário</option>
-							<option value="Artesanato">Artesanato</option>
-							<option value="Acessório">Acessório</option>
-							<option value="Outro">Outro</option>
-						</select>
-					</div>
-					<br>
-					<div class="col-md-2">
-						<label for="form-label"><strong>Preço</strong></label>
-						<input type="number" step="0.01" name="preco" th:value="${produto.preco}" class="form-control"  placeholder="R$" required>
-						
-					</div>
-					<br>
-					<div class="form-floating mb-3">
-						<input type="text" name="descricao" class="form-control" th:value="${produto.descricao}" maxlength="275" placeholder="Descrição" style="height: 100px" required>
-						<label class="form-label" for="floatingInput">Descrição</label>
-						<div class="form-text">Limite máximo de 255 caracteres</div>
-					</div>
- 
-					<div class="form-floating">
-						<input type="date" name="dataVenda" class="form-control" th:value="${produto.dataVenda}"  placeholder="Data de venda" required>
-						<label for="">Data de venda</label>
-					</div>
-					<br>
-					<div class="form-floating">
-						<input type="time" name="horario" class="form-control" th:value="${produto.horario}"  placeholder="Horário de Venda" required>
-						<label for="">Horário de Venda</label>
-					</div>
-					
-					<br>
-					<div class="input-group mb-3">
-						<input type="file" name="file" class="form-control" >
-						<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>
-					</div>
-					<br>
-					
-					<div>
-						<button type="submit" class="btn btn-success">Cadastrar</button>
-					</div>
+	<div class="row">
+		<div class="row g-3" style=" margin: 5% auto;">
+			<h1 style="text-align: center;">Adicionar Produto</h1>
+			<div class="col-md-6 offset-md-3" style="background-color: rgb(199, 230, 204); border-radius: 5%;">
+				<form th:action="@{'/comerciantes/' + ${id} + '/produtos'}" enctype="multipart/form-data" method="post">
+					<div style=" margin: 5% auto;">
+						<div class="form-floating mb-3">
+							<input type="hidden" name="id" th:value="${produto.id}" class="form-control"
+								placeholder="Nome do Produto" readonly="readonly">
 
-			</form>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" name="nome" th:value="${produto.nome}" class="form-control"
+								placeholder="Nome do Produto" required>
+							<label for="validationCustom01">Nome do Produto</label>
+						</div>
+						<div class="col-md-4">
+							<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
+							<select class="form-select" name="categoria" th:value="${produto.categoria}" required>
+								<option selected>Categoria do Produto</option>
+								<option value="Alimento">Alimento</option>
+								<option value="Vestuario">Vestuário</option>
+								<option value="Artesanato">Artesanato</option>
+								<option value="Acessório">Acessório</option>
+								<option value="Outro">Outro</option>
+							</select>
+						</div>
+						<br>
+						<div class="col-md-2">
+							<label for="form-label"><strong>Preço</strong></label>
+							<input type="number" step="0.01" name="preco" th:value="${produto.preco}"
+								class="form-control" placeholder="R$" required>
 
+						</div>
+						<br>
+						<div class="form-floating mb-3">
+							<input type="text" name="descricao" class="form-control" th:value="${produto.descricao}"
+								maxlength="275" placeholder="Descrição" style="height: 100px" required>
+							<label class="form-label" for="floatingInput">Descrição</label>
+							<div class="form-text">Limite máximo de 255 caracteres</div>
+						</div>
 
+						<div class="form-floating">
+							<input type="date" name="dataVenda" class="form-control" th:value="${produto.dataVenda}"
+								placeholder="Data de venda" required>
+							<label for="">Data de venda</label>
+						</div>
+						<br>
+						<div class="form-floating">
+							<input type="time" name="horario" class="form-control" th:value="${produto.horario}"
+								placeholder="Horário de Venda" required>
+							<label for="">Horário de Venda</label>
+						</div>
 
+						<br>
+						<div class="input-group mb-3">
+							<input type="file" name="file" class="form-control">
+							<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>
+						</div>
+						<br>
 
+						<div>
+							<button type="submit" class="btn btn-success">Cadastrar</button>
+						</div>
 
-
+				</form>
+			</div>
+		</div>
+	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 		crossorigin="anonymous"></script>
