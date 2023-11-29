@@ -10,6 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Produto {
@@ -18,14 +21,28 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Por favor, forneça um Nome.")
     private String nome;
+
+    @NotBlank(message = "Por favor, forneça uma Descrição.")
     private String descricao;
+
+    @NotNull(message = "Por favor, forneça um Preço.")
     private double preco;
+
+    @NotBlank(message = "Por favor, selecione uma Categoria.")
     private String categoria;
+
+    @NotNull(message = "Por favor, forneça uma Data.")
+    @FutureOrPresent(message = "A Data de Venda deve ser no presente ou no futuro.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataVenda;
     
+    @NotNull(message = "Por favor, forneça um Horário.")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horario;
+
+    private String nomeImg;
 
     public LocalDate getDataVenda() {
         return dataVenda;
@@ -43,7 +60,7 @@ public class Produto {
         this.horario = horario;
     }
 
-    private String nomeImg;
+    
 
     @ManyToOne
     private Comerciante comerciante;
