@@ -43,37 +43,40 @@ public class comerciantesControllers {
 	}
 
 	@PostMapping
-	public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo) {
+public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
+        @RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath) {
 
 				if (result.hasErrors()) {
 					return cadastro(comerciante);
 				}
 
-		cr.save(comerciante);
-
-		try {
-			if (!arquivo.isEmpty() && arquivo != null) {
-				byte[] bytes = arquivo.getBytes();
-				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-				Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal); 
-				Files.write(caminho, bytes);
-
-				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal); 
 				cr.save(comerciante);
-				System.out.println("Caminho completo do arquivo: " + caminho);
-			} else {
-				comerciante.setNomeImg("perfilNulo.png");
-				cr.save(comerciante);
+
+				try {
+					if (!arquivo.isEmpty() && arquivo != null) {
+						// Processar e salvar a nova imagem
+						byte[] bytes = arquivo.getBytes();
+						String nomeOriginal = arquivo.getOriginalFilename();
+						Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal);
+						Files.write(caminho, bytes);
+			
+						comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
+					} else if (filePath != null && !filePath.isEmpty()) {
+						// Se não houver uma nova imagem e há um caminho existente, use o caminho existente
+						comerciante.setNomeImg(filePath);
+					} else {
+						// Se não houver uma nova imagem e nenhum caminho existente, defina como "perfilNulo.png"
+						comerciante.setNomeImg("perfilNulo.png");
+					}
+			
+					cr.save(comerciante);
+					System.out.println("Comerciante Salvo");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			
+				return "redirect:/comerciantes";
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("Comerciante Salvo");
-
-		return "redirect:/comerciantes";
-	}
 
 	@GetMapping
 	public ModelAndView listar() {
@@ -106,7 +109,8 @@ public class comerciantesControllers {
 
 	@PostMapping("/{idComerciante}/produtos")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo) {
+			@RequestParam("file") MultipartFile arquivo,@RequestParam("filePath") String filePath) {
+
 				if (result.hasErrors()) {
 					
 					return "redirect:/cadastros/formProdutos";
@@ -128,7 +132,7 @@ public class comerciantesControllers {
 					pr.save(produto);
 			
 					try {
-						if (!arquivo.isEmpty()) {
+						if (!arquivo.isEmpty() && arquivo != null) {
 							byte[] bytes = arquivo.getBytes();
 							String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
 							Path caminho = Paths.get(caminhoImagensProduto +String.valueOf(produto.getId()) + nomeOriginal); // Use o nome original do arquivo
@@ -137,16 +141,20 @@ public class comerciantesControllers {
 							produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); // Define o nome da imagem como o nome original
 							pr.save(produto);
 							System.out.println("Caminho completo do arquivo: " + caminho);
-						}else{
+						}else if (filePath != null && !filePath.isEmpty()) {
+            				// Se não houver uma nova imagem e há um caminho existente, use o caminho existente
+           					 produto.setNomeImg(filePath);
+        				} else {
+            				// Se não houver uma nova imagem e nenhum caminho existente, defina como "imgPadrao.png"
 							produto.setNomeImg("imgPadrao.png");
-							pr.save(produto);
-						}
-					} catch (IOException e) {
+							
+						
+					}pr.save(produto);
+					System.out.println("Produto Salvo");
+				} catch (IOException e) {
 						e.printStackTrace();
 					}
-			
-					System.out.println("Produto Salvo");
-					return "redirect:/comerciantes/{idComerciante}";
+				return "redirect:/comerciantes/{idComerciante}";
 	}
 
 	@GetMapping("/{id}/remover")

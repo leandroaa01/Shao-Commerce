@@ -48,25 +48,20 @@
 								<input type="hidden" class="form-control" th:field="*{id}" readonly="readonly">
 								
 							</div>
-							<div class="form-floating mb-3">
+							<div class="form-floating mb-3 col-md-5">
 								<input type="text" class="form-control" th:field="*{nome}" placeholder="Nome" required>
 								<label for="validationCustom01">Nome</label>
 								<div th:if="${#fields.hasErrors('nome')}" class="alert alert-danger" th:errors="*{nome}"></div>
 							</div>
-							<div class=" mb-3">
-								<label class="form-label"><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
-								<input type="tel" class="form-control" placeholder="DD + Número" pattern="^\S*$" th:field="*{numWhats}" maxlength="11" minlength="11" required>
-								<div class="form-text">Ex: (84)98765-4321</div>
-								<div th:if="${#fields.hasErrors('numWhats')}" class="alert alert-danger" th:errors="*{numWhats}"></div>
-							</div>
-
-							<div class="form-floating mb-3">
+							<div class="form-floating mb-3 col-md-5">
 								<input type="email" class="form-control" placeholder="E-mail" th:field="*{email}" required>
 								<label>E-mail</label>
 								<div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" th:errors="*{email}"></div>
-							</div>
+								
 
-							<div class="form-floating col">
+							</div>
+							
+							<div class="form-floating col-md-5">
 								<input type="password" class="form-control" minlength="8" th:field="*{senha}" placeholder="Senha" id="senha" required> <i
 									id="icon" onclick="mostraSenha()"></i>
 								<label>Senha</label>
@@ -88,16 +83,22 @@
 								}
 							</script>
 							<br>
+							<div class=" col-md-5">
+								<label class="form-label "><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
+								<input type="tel" class="form-control " placeholder="DD + Número" pattern="^\S*$" th:field="*{numWhats}" maxlength="11" minlength="11" required>
+								<div class="form-text">Ex: (84)98765-4321</div>
+								<div th:if="${#fields.hasErrors('numWhats')}" class="alert alert-danger" th:errors="*{numWhats}"></div>
+							</div>
+
+							
+
 
 							<br>
-							<div class="input-group mb-3">
-								<input type="file" name="file" class="form-control" th:field="*{nomeImg}">
-								<label class="input-group-text"  for="inputGroupFile02">Foto de Perfil</label>
-							</div>
-							<div class="mb-3">
-
-								<input type="hidden" class="form-control" id="filePath"  readonly>
-							</div>
+							<div class="input-group col-md-5">
+								<input type="file" class="form-control" name="file">
+								<label class="input-group-text" for="inputGroupFile02">Foto de Perfil</label>
+							  </div>
+							  <input type="hidden"class="form-text" name="filePath" th:value="${comerciante.nomeImg}">
 							<br>
 
 							<div>
