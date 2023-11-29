@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
@@ -38,12 +39,16 @@ public class comerciantesControllers {
 
 	@GetMapping("/form")
 	public String cadastro(Comerciante comerciante) {
-		return "cadastro/form";
+		return "cadastros/form";
 	}
 
 	@PostMapping
-	public String salvarComerciante(Comerciante comerciante, BindingResult result,
+	public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
+
+				if (result.hasErrors()) {
+					return cadastro(comerciante);
+				}
 
 		cr.save(comerciante);
 
@@ -51,15 +56,10 @@ public class comerciantesControllers {
 			if (!arquivo.isEmpty() && arquivo != null) {
 				byte[] bytes = arquivo.getBytes();
 				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-				Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal); // Use o
-																												// nome
-																												// original
-																												// do
-																												// arquivo
+				Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal); 
 				Files.write(caminho, bytes);
 
-				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal); // Defina o nome da imagem
-																							// como o nome original
+				comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal); 
 				cr.save(comerciante);
 				System.out.println("Caminho completo do arquivo: " + caminho);
 			} else {
@@ -107,6 +107,10 @@ public class comerciantesControllers {
 	@PostMapping("/{idComerciante}/produtos")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo) {
+				if (result.hasErrors()) {
+					
+					return "redirect:/cadastros/formProdutos";
+				}
 
 				System.out.println("Id do comerciante:" + idComerciante);
 				System.out.println(produto);
@@ -142,11 +146,6 @@ public class comerciantesControllers {
 					}
 			
 					System.out.println("Produto Salvo");
-			
-					
-			
-					
-			
 					return "redirect:/comerciantes/{idComerciante}";
 	}
 

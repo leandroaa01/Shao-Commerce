@@ -12,16 +12,20 @@
 </head>
 
 <body style="background-color:honeydew;">
+	
 	<div th:replace="~{menu :: menu}"></div>
 	<div class="row">
 		<div class="row g-3" style=" margin: 5% auto;">
 			<h1 style="text-align: center;">Adicionar Produto</h1>
 			<div class="col-md-6 offset-md-3" style="background-color: rgb(199, 230, 204); border-radius: 5%;">
-				<form th:action="@{/comerciantes/{id}/produtos (id=${comerciante.id}) }" enctype="multipart/form-data"
+				<form th:action="@{/comerciantes/{id}/produtos (id=${comerciante.id}) }" th:object="${produto}" enctype="multipart/form-data"
 					method="post">
+					<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						Por favor, corrija os erros abaixo e tente novamente.
+					</div>
 					<div style=" margin: 5% auto;"></div>
 					<div class="form-floating mb-3">
-						<input type="hidden" name="id" th:value="${produto.id}" class="form-control"
+						<input type="hidden" th:field="*{id}" class="form-control"
 							placeholder="Nome do Produto" readonly="readonly">
 
 					</div>
@@ -29,6 +33,7 @@
 						<input type="text" name="nome" th:value="${produto.nome}" class="form-control"
 							placeholder="Nome do Produto" required>
 						<label for="validationCustom01">Nome do Produto</label>
+						<div th:if="${#fields.hasErrors('nome')}" class="alert alert-danger" th:errors="*{nome}"></div>
 					</div>
 					<div class="col-md-4">
 						<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
@@ -40,19 +45,21 @@
 							<option value="Acessório">Acessório</option>
 							<option value="Outro">Outro</option>
 						</select>
+						<div th:if="${#fields.hasErrors('categoria')}" class="alert alert-danger" th:errors="*{categoria}"></div>
 					</div>
 					<br>
 					<div class="col-md-2">
 						<label for="form-label"><strong>Preço</strong></label>
 						<input type="number" step="0.01" name="preco" th:value="${produto.preco}" class="form-control"
 							placeholder="R$" required>
-
+							<div th:if="${#fields.hasErrors('preco')}" class="alert alert-danger" th:errors="*{preco}"></div>
 					</div>
 					<br>
 					<div class="form-floating mb-3">
 						<input type="text" name="descricao" class="form-control" th:value="${produto.descricao}"
 							maxlength="275" placeholder="Descrição" style="height: 100px" required>
 						<label class="form-label" for="floatingInput">Descrição</label>
+						<div th:if="${#fields.hasErrors('descricao')}" class="alert alert-danger" th:errors="*{descricao}"></div>
 						<div class="form-text">Limite máximo de 255 caracteres</div>
 					</div>
 
@@ -60,12 +67,14 @@
 						<input type="date" name="dataVenda" class="form-control" th:value="${produto.dataVenda}"
 							placeholder="Data de venda" required>
 						<label for="">Data de venda</label>
+						<div th:if="${#fields.hasErrors('dataVenda')}" class="alert alert-danger" th:errors="*{dataVenda}"></div>
 					</div>
 					<br>
 					<div class="form-floating">
 						<input type="time" name="horario" class="form-control" th:value="${produto.horario}"
 							placeholder="Horário de Venda" required>
 						<label for="">Horário de Venda</label>
+						<div th:if="${#fields.hasErrors('horario')}" class="alert alert-danger" th:errors="*{horario}"></div>
 					</div>
 
 					<br>

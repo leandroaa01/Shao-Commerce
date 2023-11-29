@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Comerciante {
@@ -20,11 +24,21 @@ public class Comerciante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
+	@NotBlank(message = "Por favor, forneça um nome.")
 	private String nome;
+
+	
+	@Email(message = "O e-mail deve ser válido")
 	private String email;
+
+	@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
 	private String senha;
+
+	
+	@Pattern(regexp = "^[0-9]+$", message = "O número do WhatsApp deve conter apenas dígitos")
+	@Size(min = 11, max = 11,  message = "O número do WhatsApp deve ter exatamente 11 dígitos")
 	private String numWhats;
+
 	private String nomeImg;
 
 	public String caminhoImg(){
