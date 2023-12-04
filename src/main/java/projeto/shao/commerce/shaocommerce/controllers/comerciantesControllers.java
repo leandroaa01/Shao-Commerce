@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,40 +44,47 @@ public class comerciantesControllers {
 	}
 
 	@PostMapping
-public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
-        @RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath) {
+	public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
+			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
 
-				if (result.hasErrors()) {
-					return cadastro(comerciante);
-				}
-
-				cr.save(comerciante);
-
-				try {
-					if (!arquivo.isEmpty() && arquivo != null) {
-						// Processar e salvar a nova imagem
-						byte[] bytes = arquivo.getBytes();
-						String nomeOriginal = arquivo.getOriginalFilename();
-						Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal);
-						Files.write(caminho, bytes);
-			
-						comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
-					} else if (filePath != null && !filePath.isEmpty()) {
-						// Se não houver uma nova imagem e há um caminho existente, use o caminho existente
-						comerciante.setNomeImg(filePath);
-					} else {
-						// Se não houver uma nova imagem e nenhum caminho existente, defina como "perfilNulo.png"
-						comerciante.setNomeImg("perfilNulo.png");
-					}
-			
+		if (result.hasErrors()) {
+			return cadastro(comerciante);
+		}
+		try {
+			if (arquivo != null && !arquivo.isEmpty()) {
+				// Verificar se o arquivo é uma imagem
+				String contentType = arquivo.getContentType();
+				if (contentType != null && contentType.startsWith("image")) {
+					// Processar e salvar a nova imagem
 					cr.save(comerciante);
-					System.out.println("Comerciante Salvo");
-				} catch (IOException e) {
-					e.printStackTrace();
+					byte[] bytes = arquivo.getBytes();
+					String nomeOriginal = arquivo.getOriginalFilename();
+					Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal);
+					Files.write(caminho, bytes);
+
+					comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
+				} else {
+					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
+					return "cadastros/form"; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
 				}
-			
-				return "redirect:/comerciantes";
+			} else if (filePath != null && !filePath.isEmpty()) {
+				// Se não houver uma nova imagem e há um caminho existente, use o caminho
+				// existente
+				comerciante.setNomeImg(filePath);
+			} else {
+				// Se não houver uma nova imagem e nenhum caminho existente, defina como
+				// "perfilNulo.png"
+				comerciante.setNomeImg("perfilNulo.png");
 			}
+
+			cr.save(comerciante);
+			System.out.println("Comerciante Salvo");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/comerciantes";
+	}
 
 	@GetMapping
 	public ModelAndView listar() {
@@ -109,52 +117,65 @@ public String salvarComerciante(@Valid Comerciante comerciante, BindingResult re
 
 	@PostMapping("/{idComerciante}/produtos")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo,@RequestParam("filePath") String filePath) {
+			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
 
-				if (result.hasErrors()) {
-					
-					return "redirect:/cadastros/formProdutos";
+		if (result.hasErrors()) {
+
+			return "redirect:/cadastros/formProdutos";
+		}
+		
+
+		System.out.println("Id do comerciante:" + idComerciante);
+		System.out.println(produto);
+
+		Optional<Comerciante> opt = cr.findById(idComerciante);
+
+		if (opt.isEmpty()) {
+			return "redirect:/comerciantes";
+		}
+
+		try {
+			if (!arquivo.isEmpty() && arquivo != null) {
+				String contentType = arquivo.getContentType();
+
+
+				if (contentType != null && contentType.startsWith("image")) {
+
+				Comerciante comerciante = opt.get();
+				produto.setComerciante(comerciante);
+				pr.save(produto);
+
+				byte[] bytes = arquivo.getBytes();
+				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
+				Path caminho = Paths.get(caminhoImagensProduto + String.valueOf(produto.getId()) + nomeOriginal); 
+				
+				Files.write(caminho, bytes);
+
+				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); 
+				pr.save(produto);
+				System.out.println("Caminho completo do arquivo: " + caminho);
+
+				} else {
+					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
+					return "cadastros/formProdutos"; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
 				}
+			} else if (filePath != null && !filePath.isEmpty()) {
+				// Se não houver uma nova imagem e há um caminho existente, use o caminho
+				// existente
+				produto.setNomeImg(filePath);
+			} else {
+				// Se não houver uma nova imagem e nenhum caminho existente, defina como
+				// "perfilNulo.png"
+				produto.setNomeImg("imgPadrao.png");
+			}
 
-				System.out.println("Id do comerciante:" + idComerciante);
-				System.out.println(produto);
+			pr.save(produto);
 			
-					Optional<Comerciante> opt = cr.findById(idComerciante);
-			
-					if (opt.isEmpty()) {
-						return "redirect:/comerciantes";
-					}
-			
-					Comerciante comerciante = opt.get();
-			
-					produto.setComerciante(comerciante);
-			
-					pr.save(produto);
-			
-					try {
-						if (!arquivo.isEmpty() && arquivo != null) {
-							byte[] bytes = arquivo.getBytes();
-							String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-							Path caminho = Paths.get(caminhoImagensProduto +String.valueOf(produto.getId()) + nomeOriginal); // Use o nome original do arquivo
-							Files.write(caminho, bytes);
-			
-							produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); // Define o nome da imagem como o nome original
-							pr.save(produto);
-							System.out.println("Caminho completo do arquivo: " + caminho);
-						}else if (filePath != null && !filePath.isEmpty()) {
-            				// Se não houver uma nova imagem e há um caminho existente, use o caminho existente
-           					 produto.setNomeImg(filePath);
-        				} else {
-            				// Se não houver uma nova imagem e nenhum caminho existente, defina como "imgPadrao.png"
-							produto.setNomeImg("imgPadrao.png");
-							
-						
-					}pr.save(produto);
-					System.out.println("Produto Salvo");
-				} catch (IOException e) {
-						e.printStackTrace();
-					}
-				return "redirect:/comerciantes/{idComerciante}";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/comerciantes/{idComerciante}";
 	}
 
 	@GetMapping("/{id}/remover")
