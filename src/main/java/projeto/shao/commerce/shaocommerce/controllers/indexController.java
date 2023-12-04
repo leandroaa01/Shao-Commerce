@@ -24,9 +24,11 @@ public class indexController {
     @GetMapping("/comerciantes/{id}/produtos")
     public String formProduto(@PathVariable Long id, Produto produto) {
         return "cadastros/formProdutos";
-       
-
-		
     }
+    @GetMapping("/teste")
+    public String teste() {
+        return "tipo";
+    }
+
 
 }
