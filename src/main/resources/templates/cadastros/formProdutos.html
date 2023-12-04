@@ -15,10 +15,10 @@
 	
 	<div th:replace="~{menu :: menu}"></div>
 	<div class="row">
-		<div class="row g-3" style=" margin: 5% auto;">
+		<div class="row g-3 col-md-8" style=" margin: 5% auto;">
 			<h1 style="text-align: center;">Adicionar Produto</h1>
-			<div class="col-md-6 offset-md-3" style="background-color: #39C81B; border-radius: 5%;">
-				<form th:action="@{'/comerciantes/' + ${id} + '/produtos'}" th:object="${produto}" enctype="multipart/form-data" method="post">
+			<div class="col-md-6 offset-md-3" style="background-color: rgb(97, 197, 114); border-radius: 5%;">
+				<form th:action="@{'/comerciantes/' + ${id} + '/produtos' }" th:object="${produto}" enctype="multipart/form-data" method="post">
 					<div style=" margin: 5% auto;">
 						<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
 							Por favor, corrija os erros abaixo e tente novamente.
@@ -34,8 +34,8 @@
 							<label for="validationCustom01">Nome do Produto</label>
 							<div th:if="${#fields.hasErrors('nome')}" class="alert alert-danger" th:errors="*{nome}"></div>
 						</div>
-						<div class="col-md-4">
-							<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
+						<div class="col-md-5">
+							<label for="inputState" class="form-label" style="color: white;"><strong> Selecione a categoria</strong></label>
 							<select class="form-select" th:field="*{categoria}" required>
 								<option value="" selected>Categoria do Produto</option>
 								<option value="Alimento">Alimento</option>
@@ -47,8 +47,8 @@
 							<div th:if="${#fields.hasErrors('categoria')}" class="alert alert-danger" th:errors="*{categoria}"></div>
 						</div>
 						<br>
-						<div class="col-md-2">
-							<label for="form-label"><strong>Preço</strong></label>
+						<div class="col-md-4">
+							<label for="form-label" style="color: white;" ><strong>Preço</strong></label>
 							<input type="number" step="0.01" th:field="*{preco}"
 								class="form-control" placeholder="R$" required>
 								<div th:if="${#fields.hasErrors('preco')}" class="alert alert-danger" th:errors="*{preco}"></div>
@@ -60,7 +60,7 @@
 								maxlength="275" placeholder="Descrição" style="height: 100px" required>
 							<label class="form-label" for="floatingInput">Descrição</label>
 							<div th:if="${#fields.hasErrors('descricao')}" class="alert alert-danger" th:errors="*{descricao}"></div>
-							<div class="form-text">Limite máximo de 255 caracteres</div>
+							<div class="form-text" style="color: white;">Limite máximo de 255 caracteres</div>
 						</div>
 
 						<div class="form-floating">
@@ -73,15 +73,16 @@
 						<div class="form-floating">
 							<input type="time" class="form-control" th:field="*{horario}"
 								placeholder="Horário de Venda" required>
-							<label for="">Horário de Venda</label>
+							<label >Horário de Venda</label>
 							<div th:if="${#fields.hasErrors('horario')}" class="alert alert-danger" th:errors="*{horario}"></div>
 						</div>
 
 						<br>
 						<div class="input-group mb-3">
 							<input type="file" name="file" class="form-control">
-							<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>
+							<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>							
 						</div>
+						<div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
 						<br>
 						<input type="hidden"class="form-text" name="filePath" th:value="${produto.nomeImg}">
 
