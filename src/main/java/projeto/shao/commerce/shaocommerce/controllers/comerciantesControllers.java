@@ -42,6 +42,10 @@ public class comerciantesControllers {
 	public String cadastro(Comerciante comerciante) {
 		return "cadastros/form";
 	}
+	@GetMapping("/comerciantes/{id}/produtos")
+    public String cadastroProduto(@PathVariable Long id, Produto produto) {
+        return "cadastros/formProdutos";
+	}
 
 	@PostMapping
 	public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
@@ -119,11 +123,10 @@ public class comerciantesControllers {
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
 
-		if (result.hasErrors()) {
-
-			return "redirect:/cadastros/formProdutos";
-		}
-		
+				if (result.hasErrors()) {
+					
+					return "cadastros/formProdutos";
+				}
 
 		System.out.println("Id do comerciante:" + idComerciante);
 		System.out.println(produto);
@@ -133,27 +136,25 @@ public class comerciantesControllers {
 		if (opt.isEmpty()) {
 			return "redirect:/comerciantes";
 		}
+		Comerciante comerciante = opt.get();
+		produto.setComerciante(comerciante);
+		pr.save(produto);
 
 		try {
 			if (!arquivo.isEmpty() && arquivo != null) {
 				String contentType = arquivo.getContentType();
 
-
 				if (contentType != null && contentType.startsWith("image")) {
 
-				Comerciante comerciante = opt.get();
-				produto.setComerciante(comerciante);
-				pr.save(produto);
+					byte[] bytes = arquivo.getBytes();
+					String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
+					Path caminho = Paths.get(caminhoImagensProduto + String.valueOf(produto.getId()) + nomeOriginal);
 
-				byte[] bytes = arquivo.getBytes();
-				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-				Path caminho = Paths.get(caminhoImagensProduto + String.valueOf(produto.getId()) + nomeOriginal); 
-				
-				Files.write(caminho, bytes);
+					Files.write(caminho, bytes);
 
-				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); 
-				pr.save(produto);
-				System.out.println("Caminho completo do arquivo: " + caminho);
+					produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal);
+					pr.save(produto);
+					System.out.println("Caminho completo do arquivo: " + caminho);
 
 				} else {
 					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
@@ -170,7 +171,7 @@ public class comerciantesControllers {
 			}
 
 			pr.save(produto);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -198,8 +199,17 @@ public class comerciantesControllers {
 					}
 				}
 
-				pr.deleteAll(produtos);
 			}
+			String nomeImagemComerciante = comerciante.getNomeImg();
+			if (nomeImagemComerciante != null && !nomeImagemComerciante.equals("perfilNulo.png")) {
+				try {
+					Files.deleteIfExists(Paths.get(caminhoImagens + nomeImagemComerciante));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			pr.deleteAll(produtos);
+
 			cr.delete(comerciante);
 		}
 		return "redirect:/comerciantes";
@@ -216,6 +226,16 @@ public class comerciantesControllers {
 			Produto produto = optProduto.get();
 
 			if (comerciante.getId() == produto.getComerciante().getId()) {
+				String nomeImagem = produto.getNomeImg();
+				Path caminhoArquivo = Paths.get(caminhoImagensProduto + nomeImagem);
+
+				if (Files.exists(caminhoArquivo) && !nomeImagem.equals("imgPadrao.png")) {
+					try {
+						Files.delete(caminhoArquivo);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				pr.delete(produto);
 			}
 		}
