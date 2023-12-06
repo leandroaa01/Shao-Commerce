@@ -26,7 +26,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 
 @Controller
 @RequestMapping("/produtos")
-public class produtosController {
+public class ProdutosController {
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
 	private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
@@ -35,6 +35,11 @@ public class produtosController {
 
 	@Autowired
 	private ProdutoRepository pr;
+
+    @GetMapping("/produtos/{id}/produtos")
+    public String formProduto(@PathVariable Long id, Produto produto) {
+        return "cadastros/formProdutos";
+    }
 
     @GetMapping()
 	public ModelAndView listarProdutos() {
@@ -70,7 +75,7 @@ public class produtosController {
 
 		if (result.hasErrors()) {
 
-			return "redirect:/cadastros/formProdutos";
+			return formProduto(idComerciante, produto);
 		}
 		
 

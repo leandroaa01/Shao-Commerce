@@ -347,6 +347,9 @@
                     </div>
                 </div>
             </div>  
+            <div th:if="${#lists.isEmpty(produtos)}">
+                <h1 style="text-align: center; margin-top: 30%;" >Nenhum produto cadastrado</h1>
+            </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"
     integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw=="

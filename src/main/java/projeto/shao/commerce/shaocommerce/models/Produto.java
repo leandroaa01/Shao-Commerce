@@ -132,4 +132,8 @@ public class Produto {
                 + ", comerciante=" + comerciante + "]";
     }
 
+    public Produto() {
+    }
+    
+
 }

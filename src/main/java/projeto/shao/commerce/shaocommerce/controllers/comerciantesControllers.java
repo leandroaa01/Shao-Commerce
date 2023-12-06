@@ -27,7 +27,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 
 @Controller
 @RequestMapping("/comerciantes")
-public class comerciantesControllers {
+public class ComerciantesControllers {
 
 	// private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
@@ -40,7 +40,7 @@ public class comerciantesControllers {
 	@Autowired
 	private ProdutoRepository pr;
 
-	@GetMapping("/form")
+	@GetMapping("/formComerciante")
 	public String cadastro(Comerciante comerciante) {
 		return "cadastros/form";
 	}
@@ -85,7 +85,7 @@ public class comerciantesControllers {
 			e.printStackTrace();
 		}
 
-		return "redirect:/comerciantes";
+		return "redirect:/comerciantes/comerciantes";
 	}
 
 	@GetMapping("/comerciantes")

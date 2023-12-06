@@ -19,7 +19,8 @@ public class Comerciante {
 		return "Comerciante [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", nomeImagem="
 				+ nomeImg +", numWhats="+numWhats  +"]";
 	}
-
+	public Comerciante() {
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,6 +31,8 @@ public class Comerciante {
 	
 	@Email(message = "O e-mail deve ser válido")
 	private String email;
+
+	
 
 	@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
 	private String senha;
