@@ -12,7 +12,7 @@ public class indexController {
 
     @RequestMapping("/")
     public String index() {
-        return "redirect:/comerciantes";
+        return "redirect:/produtos";
     }
 
     @GetMapping("/form")
@@ -21,13 +21,13 @@ public class indexController {
     }
 
 
-    @GetMapping("/comerciantes/{id}/produtos")
+    @GetMapping("/produtos/{id}/produtos")
     public String formProduto(@PathVariable Long id, Produto produto) {
         return "cadastros/formProdutos";
     }
     @GetMapping("/teste")
     public String teste() {
-        return "tipo";
+        return "cadastros/formProdutos";
     }
 
 

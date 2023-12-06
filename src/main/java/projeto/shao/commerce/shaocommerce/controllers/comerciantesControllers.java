@@ -88,97 +88,17 @@ public class comerciantesControllers {
 		return "redirect:/comerciantes";
 	}
 
-	@GetMapping
+	@GetMapping("/comerciantes")
 	public ModelAndView listar() {
 		List<Comerciante> comerciantes = cr.findAll();
-		ModelAndView mv = new ModelAndView("index");
+		ModelAndView mv = new ModelAndView("vendedores");
 		mv.addObject("comerciantes", comerciantes);
 
 		return mv;
 	}
+	
 
-	@GetMapping("/{id}")
-	public ModelAndView verProdutos(@PathVariable Long id, Produto produto) {
-		Optional<Comerciante> opt = cr.findById(id);
-		ModelAndView md = new ModelAndView();
-
-		if (opt.isEmpty()) {
-			md.setViewName("redirect:/comerciantes");
-			return md;
-		}
-
-		Comerciante comerciante = opt.get();
-		md.addObject("comerciante", comerciante);
-
-		List<Produto> produtos = pr.findByComerciante(comerciante);
-		md.addObject("produtos", produtos);
-		md.setViewName("/produtos");
-
-		return md;
-	}
-
-	@PostMapping("/{idComerciante}/produtos")
-	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
-
-		if (result.hasErrors()) {
-
-			return "redirect:/cadastros/formProdutos";
-		}
-		
-
-		System.out.println("Id do comerciante:" + idComerciante);
-		System.out.println(produto);
-
-		Optional<Comerciante> opt = cr.findById(idComerciante);
-
-		if (opt.isEmpty()) {
-			return "redirect:/comerciantes";
-		}
-
-		try {
-			if (!arquivo.isEmpty() && arquivo != null) {
-				String contentType = arquivo.getContentType();
-
-
-				if (contentType != null && contentType.startsWith("image")) {
-
-				Comerciante comerciante = opt.get();
-				produto.setComerciante(comerciante);
-				pr.save(produto);
-
-				byte[] bytes = arquivo.getBytes();
-				String nomeOriginal = arquivo.getOriginalFilename(); // Obtenha o nome original do arquivo
-				Path caminho = Paths.get(caminhoImagensProduto + String.valueOf(produto.getId()) + nomeOriginal); 
-				
-				Files.write(caminho, bytes);
-
-				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); 
-				pr.save(produto);
-				System.out.println("Caminho completo do arquivo: " + caminho);
-
-				} else {
-					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
-					return "cadastros/formProdutos"; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
-				}
-			} else if (filePath != null && !filePath.isEmpty()) {
-				// Se não houver uma nova imagem e há um caminho existente, use o caminho
-				// existente
-				produto.setNomeImg(filePath);
-			} else {
-				// Se não houver uma nova imagem e nenhum caminho existente, defina como
-				// "perfilNulo.png"
-				produto.setNomeImg("imgPadrao.png");
-			}
-
-			pr.save(produto);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return "redirect:/comerciantes/{idComerciante}";
-	}
+	
 
 	@GetMapping("/{id}/remover")
 	public String apagarComerciante(@PathVariable Long id) {
@@ -207,23 +127,7 @@ public class comerciantesControllers {
 		return "redirect:/comerciantes";
 	}
 
-	@GetMapping("/{idComerciante}/produtos/{idProduto}/apagar")
-	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
-
-		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
-		Optional<Produto> optProduto = pr.findById(idProduto);
-
-		if (optComerciante.isPresent() && optProduto.isPresent()) {
-			Comerciante comerciante = optComerciante.get();
-			Produto produto = optProduto.get();
-
-			if (comerciante.getId() == produto.getComerciante().getId()) {
-				pr.delete(produto);
-			}
-		}
-
-		return "redirect:/comerciantes/{idComerciante}";
-	}
+	
 
 	@GetMapping("/{id}/selecionar")
 	public ModelAndView selecionarComerciante(@PathVariable Long id) {
@@ -240,31 +144,6 @@ public class comerciantesControllers {
 		return md;
 	}
 
-	@GetMapping("/{idComerciante}/produtos/{idProduto}/selecionar")
-	public ModelAndView selecionarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
-
-		ModelAndView md = new ModelAndView();
-		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
-		Optional<Produto> optProduto = pr.findById(idProduto);
-
-		if (optComerciante.isEmpty() || optProduto.isEmpty()) {
-			md.setViewName("redirect:/comerciantes");
-			return md;
-		}
-
-		Comerciante comerciante = optComerciante.get();
-		Produto produto = optProduto.get();
-
-		if (comerciante.getId() != produto.getComerciante().getId()) {
-			md.setViewName("redirect:/comerciantes");
-			return md;
-		}
-
-		md.setViewName("cadastros/formProdutoEdit");
-		md.addObject("produto", produto);
-		md.addObject("comerciante", comerciante);
-
-		return md;
-	}
+	
 
 }
