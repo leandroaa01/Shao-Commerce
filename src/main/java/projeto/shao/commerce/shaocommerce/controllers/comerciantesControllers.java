@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
+import projeto.shao.commerce.Enums.Perfil;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
@@ -41,14 +42,19 @@ public class ComerciantesControllers {
 	private ProdutoRepository pr;
 
 	@GetMapping("/formComerciante")
-	public String cadastro(Comerciante comerciante) {
-		return "cadastros/form";
+	public ModelAndView cadastro(Comerciante comerciante) {
+		 ModelAndView mv = new ModelAndView("cadastros/form");
+        mv.addObject("comerciante", comerciante);
+        Perfil[] profiles = {Perfil.ADMIN, Perfil.COMERCIANTE};
+        mv.addObject("perfils", profiles);
+        return mv;
+		
 	}
 
 	@PostMapping
-	public String salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
+	public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
-
+		 ModelAndView mv = new ModelAndView("cadastros/form");
 		if (result.hasErrors()) {
 			return cadastro(comerciante);
 		}
@@ -67,7 +73,7 @@ public class ComerciantesControllers {
 					comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
 				} else {
 					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
-					return "cadastros/form"; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
+					return mv; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
 				}
 			} else if (filePath != null && !filePath.isEmpty()) {
 				// Se não houver uma nova imagem e há um caminho existente, use o caminho
@@ -85,13 +91,13 @@ public class ComerciantesControllers {
 			e.printStackTrace();
 		}
 
-		return "redirect:/comerciantes/comerciantes";
+		return listar();
 	}
 
 	@GetMapping("/comerciantes")
 	public ModelAndView listar() {
 		List<Comerciante> comerciantes = cr.findAll();
-		ModelAndView mv = new ModelAndView("vendedores");
+		ModelAndView mv = new ModelAndView("home/vendedores");
 		mv.addObject("comerciantes", comerciantes);
 
 		return mv;

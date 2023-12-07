@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import projeto.shao.commerce.Enums.Perfil;
 
 @Entity
 public class Cliente {
@@ -25,6 +26,29 @@ public class Cliente {
 	@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
     @NotBlank
 	private String senha;
+
+    private Perfil perfil;
+
+
+    
+
+    public Cliente(Long id, @NotBlank(message = "Por favor, forneça um nome.") String nome,
+            @Email(message = "O e-mail deve ser válido") String email,
+            @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres") @NotBlank String senha, Perfil perfil) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
 
     public Long getId() {
         return id;
@@ -58,9 +82,12 @@ public class Cliente {
         this.senha = senha;
     }
 
+   
+
     @Override
     public String toString() {
-        return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+        return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", perfil=" + perfil
+                + "]";
     }
 
     public Cliente() {

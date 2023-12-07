@@ -44,7 +44,7 @@ public class ProdutosController {
     @GetMapping()
 	public ModelAndView listarProdutos() {
 		List<Produto> produto = pr.findAll();
-		ModelAndView mv = new ModelAndView("index");
+		ModelAndView mv = new ModelAndView("home/index");
 		mv.addObject("produto", produto);
 		return mv;
 	}
@@ -173,7 +173,7 @@ public class ProdutosController {
 			}
 		}
 
-		return "redirect:/comerciantes/{idComerciante}";
+		return "redirect:/produtos/{idComerciante}";
 	}
     
 }

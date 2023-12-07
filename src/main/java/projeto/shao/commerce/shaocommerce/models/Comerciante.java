@@ -8,17 +8,38 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import projeto.shao.commerce.Enums.Perfil;
 
 @Entity
 public class Comerciante {
 
 	
 	
+	
 	@Override
 	public String toString() {
-		return "Comerciante [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", nomeImagem="
-				+ nomeImg +", numWhats="+numWhats  +"]";
+		return "Comerciante [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", numWhats="
+				+ numWhats + ", nomeImg=" + nomeImg + ", perfil=" + perfil + "]";
 	}
+
+	
+
+	public Comerciante(Long id, @NotBlank(message = "Por favor, forneça um nome.") String nome,
+			@Email(message = "O e-mail deve ser válido") String email,
+			@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres") String senha,
+			@Pattern(regexp = "^[0-9]+$", message = "O número do WhatsApp deve conter apenas dígitos") @Size(min = 11, max = 11, message = "O número do WhatsApp deve ter exatamente 11 dígitos") String numWhats,
+			String nomeImg, Perfil perfil) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.numWhats = numWhats;
+		this.nomeImg = nomeImg;
+		this.perfil = perfil;
+	}
+
+
+
 	public Comerciante() {
 	}
 	@Id
@@ -43,6 +64,16 @@ public class Comerciante {
 	private String numWhats;
 
 	private String nomeImg;
+
+	 private Perfil perfil;
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
 
 	public String caminhoImg(){
 		return getNomeImg();

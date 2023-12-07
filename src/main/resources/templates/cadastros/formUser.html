@@ -30,14 +30,14 @@
 </head>
 
 <body style="background-color:honeydew;">
-	<div th:replace="~{menu :: menu}"></div>
+	<div th:replace="~{menu/menu :: menu}"></div>
 	<div class="row">
 		<div>
 			<div class="row g-3 col-md-8" style=" margin: 5% auto;">
 				<h1 style="text-align: center;">Faça seu Cadastro</h1>
 				<div class="col-md-5 offset-md-3" style="background-color: rgb(222, 226, 222); border-radius: 3px; width:50%; padding: 10px;">
 
-					<form action="/comerciantes" enctype="multipart/form-data" method="post" th:object="${comerciante}">
+					<form action="/user" enctype="multipart/form-data" method="post" th:object="${comerciante}">
 						<div style=" margin: 5% auto;">
 
 							<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -82,10 +82,6 @@
 									}
 								}
 							</script>
-
-						
-
-	
 							<br>
 
 							<div>
