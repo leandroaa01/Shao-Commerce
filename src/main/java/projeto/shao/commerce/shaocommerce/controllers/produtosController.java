@@ -36,10 +36,7 @@ public class ProdutosController {
 	@Autowired
 	private ProdutoRepository pr;
 
-    @GetMapping("/casdatro-produtos/{id}")
-    public String formProduto(@PathVariable Long id, Produto produto) {
-        return "cadastros/formProdutos";
-    }
+   
 
     @GetMapping()
 	public ModelAndView listarProdutos() {
@@ -48,6 +45,11 @@ public class ProdutosController {
 		mv.addObject("produto", produto);
 		return mv;
 	}
+
+ 	@GetMapping("/{id}/cadastro-produto")
+    public String formProduto(@PathVariable Long id, Produto produto) {
+        return "cadastros/formProdutos";
+    }
 
     @GetMapping("/{id}")
 	public ModelAndView verProdutos(@PathVariable Long id, Produto produto) {
@@ -64,12 +66,12 @@ public class ProdutosController {
 
 		List<Produto> produtos = pr.findByComerciante(comerciante);
 		md.addObject("produtos", produtos);
-		md.setViewName("/produtos");
+		md.setViewName("home/produtos");
 
 		return md;
 	}
 
-	@PostMapping("/{idComerciante}/produtos")
+	@PostMapping("/{idComerciante}/casdatro-produtos")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 
