@@ -36,7 +36,7 @@ public class ProdutosController {
 	@Autowired
 	private ProdutoRepository pr;
 
-    @GetMapping("/produtos/{id}/produtos")
+    @GetMapping("/casdatro-produtos/{id}")
     public String formProduto(@PathVariable Long id, Produto produto) {
         return "cadastros/formProdutos";
     }
@@ -55,7 +55,7 @@ public class ProdutosController {
 		ModelAndView md = new ModelAndView();
 
 		if (opt.isEmpty()) {
-			md.setViewName("redirect:/comerciantes");
+			md.setViewName("redirect:/produtos");
 			return md;
 		}
 
@@ -71,7 +71,7 @@ public class ProdutosController {
 
 	@PostMapping("/{idComerciante}/produtos")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo, @RequestParam("filePath") String filePath, Model model) {
+			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 
 		if (result.hasErrors()) {
 

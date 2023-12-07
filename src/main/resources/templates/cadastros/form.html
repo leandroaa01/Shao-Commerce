@@ -30,14 +30,14 @@
 </head>
 
 <body style="background-color:honeydew;">
-	<div th:replace="~{menu/menu :: menu}"></div>
+	<div th:replace="~{fragments/menu :: menu}"></div>
 	<div class="row">
 		<div>
 			<div class="row g-3 col-md-8" style=" margin: 5% auto;">
 				<h1 style="text-align: center;">Faça seu Cadastro</h1>
 				<div class="col-md-5 offset-md-3" style="background-color: rgb(222, 226, 222); border-radius: 3px; width:50%; padding: 10px;">
 
-					<form action="/comerciantes" enctype="multipart/form-data" method="post" th:object="${comerciante}">
+					<form action="/login/cadastro-comerciante" enctype="multipart/form-data" method="post" th:object="${comerciante}">
 						<div style=" margin: 5% auto;">
 
 							<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -101,6 +101,11 @@
 							  <input type="hidden"class="form-text" name="filePath" th:value="${comerciante.nomeImg}">
 							  <div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
 							<br>
+							<div class="form-floating" style="display: none;">
+                   			 <select name="perfil" id="perfil" class="form-control" th:field="*{perfil}">
+                        <option th:each="perfil : ${perfils}" th:text="${perfil}" th:value="${perfil}"></option>
+                    </select>
+                </div>
 
 							<div>
 								<button type="submit" class="btn btn-success">Cadastrar</button>
