@@ -71,7 +71,7 @@ public class ProdutosController {
 		return md;
 	}
 
-	@PostMapping("/{idComerciante}/casdatro-produtos")
+	@PostMapping("/{idComerciante}/cadastro-produto")
 	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 
@@ -153,7 +153,7 @@ public class ProdutosController {
 			return md;
 		}
 
-		md.setViewName("cadastros/formProdutoEdit");
+		md.setViewName("cadastros/EditProduto");
 		md.addObject("produto", produto);
 		md.addObject("comerciante", comerciante);
 

@@ -334,7 +334,7 @@
       <div class="col-10">
         <div class="row">
             <div class="col p-4"  th:each="p : ${produtos}">
-                <div class="card" style="width: 17rem; height: 550px;">
+                <div class="card" style="width: 17rem; height: 600px;">
                     <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >
                     <div class="card-body">
                         <h4 class="card-title" th:text="${p.nome}"  style="color: #39C81B;">Nome do Produto:</h4>
@@ -345,12 +345,11 @@
                              <span th:text="${p.horario}"></span> min</p>
                         <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
                         <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
-                    </div>
-                    <div style="text-align: right;">
+                    <div style="text-align: right; margin: 1px;">
                         <a th:href="@{'https://wa.me/55'+${comerciante.numWhats}}" class="btn btn-success" target="_blank"><i class="bi bi-whatsapp"></i></a>
                         <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/apagar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-danger"><i class="bi bi-trash"></i></a>
                         <a th:href="@{/produtos/{idComerciante}/produtos/{idProduto}/edit-produto(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
-                        </div>
+                        </div>  </div>
                 </div>
             </div>  
             <div th:if="${#lists.isEmpty(produtos)}">
