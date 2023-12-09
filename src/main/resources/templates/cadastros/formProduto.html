@@ -82,7 +82,7 @@
 						<br>
 						<div class="input-group mb-3">
 							<input type="file" name="file" class="form-control" id="fileInput"
-								th:value="${produto.nomeImg}">
+								th:value="${produto.nomeImg}"  accept="image/*">
 							<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>
 							<div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
 						</div>
