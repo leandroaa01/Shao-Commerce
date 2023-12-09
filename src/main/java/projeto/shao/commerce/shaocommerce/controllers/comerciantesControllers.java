@@ -33,7 +33,7 @@ public class ComerciantesControllers {
 	// private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
 	private static String caminhoImagens = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
-	private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
+	private static String caminhoImagensProduto = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -67,8 +67,10 @@ public class ComerciantesControllers {
 					cr.save(comerciante);
 					byte[] bytes = arquivo.getBytes();
 					String nomeOriginal = arquivo.getOriginalFilename();
-					Path caminho = Paths.get(caminhoImagens + String.valueOf(comerciante.getId()) + nomeOriginal);
+					Path caminho = Paths.get(caminhoImagens, String.valueOf(comerciante.getId()) + nomeOriginal).toAbsolutePath();
+
 					Files.write(caminho, bytes);
+					System.out.println(caminhoImagens);
 
 					comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
 				} else {

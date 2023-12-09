@@ -29,7 +29,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 @RequestMapping("/produtos")
 public class ProdutosController {
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
-	private static String caminhoImagensProduto = "C:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
+	private static String caminhoImagensProduto = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
 	private ComercianteRepository cr;

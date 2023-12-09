@@ -218,7 +218,7 @@
       </style>
     <body>
         <div class="row" >
-        <div class="sidebar col-sm-1 col-3">
+        <div class="sidebar col-lg-1 col-3">
           <div class="user-img-logo"><a href="/"><img src="/img/logo.png" style="max-width: 150px; " ></a></div>
           <div class="menu-btn">
             <i class="bi bi-justiy"></i>
@@ -237,7 +237,7 @@
               <p class="title">Pricincipal</p>
               <ul>
                 <li class="active">
-                  <a href="/">
+                  <a href="/produtos">
                     <i class="bi bi-house"></i>
                     <span class="text">Home</span>
                   </a>
@@ -330,9 +330,9 @@
         </div>
       
       
-      <div class=" col-10">
+      <div class=" col">
         <div class="row">
-            <div class=" col-sm-2 col p-4"  th:each="p : ${produto}">
+            <div class="  col p-4 "  th:each="p : ${produto}">
                 <div class="card" style="width: 17rem; height: 550px;">
                     <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >
                     <div class="card-body">
@@ -347,7 +347,7 @@
                     </div>
                 </div>
             </div>  
-            <div th:if="${#lists.isEmpty(produtos)}">
+            <div th:if="${#lists.isEmpty(produto)}">
                 <h1 style="text-align: center; margin-top: 30%;" >Nenhum produto cadastrado</h1>
             </div>
 
