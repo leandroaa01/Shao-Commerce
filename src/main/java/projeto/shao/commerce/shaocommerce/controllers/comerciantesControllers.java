@@ -32,7 +32,7 @@ public class ComerciantesControllers {
 
 	// private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
-	private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
+	private static String caminhoImagens = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
 	private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
@@ -90,8 +90,8 @@ public class ComerciantesControllers {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return listar();
+		mv.setViewName("home/vendedores");
+		return mv;
 	}
 
 	@GetMapping("/comerciantes")

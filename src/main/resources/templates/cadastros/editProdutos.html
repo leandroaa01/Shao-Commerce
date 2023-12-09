@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -14,33 +15,33 @@
 
 	<div th:replace="~{fragments/menu :: menu}"></div>
 	<div class="row">
-		<div class="row g-3" style=" margin: 5% auto;">
-			<h1 style="text-align: center;">Atualizando Produto</h1>
-			<div class="row">
-				<div class="col-md-6 offset-md-3" style="background-color: rgba(233, 230, 230, 0.849); border-radius:5px;">
-				<form th:action="@{/produtos/{id}/produtos (id=${comerciante.id}) }"th:object="${produto}"
+		<div class="row g-3 col-md-8 " style=" margin: auto;">
+			<h1 style="text-align: center;">Adicionar Produto</h1>
+			<div class="col-md-6 offset-md-3" style="background-color: rgba(233, 230, 230, 0.849); border-radius:5px;">
+				<form th:action="@{/produtos/{idComerciante}/cadastro(idComerciante=${comerciante.id}) }" th:object="${produto}"
 					enctype="multipart/form-data" method="post">
 					<div style=" margin: 5% auto;">
 						<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
 							Por favor, corrija os erros abaixo e tente novamente.
 						</div>
-						<div style=" margin: 5% auto;"></div>
 						<div class="form-floating mb-3">
 							<input type="hidden" th:field="*{id}" class="form-control" placeholder="Nome do Produto"
 								readonly="readonly">
+
 						</div>
 						<div class="form-floating mb-3">
-							<input type="text" name="nome" th:value="${produto.nome}" class="form-control"
-								placeholder="Nome do Produto" required>
+							<input type="text" th:field="*{nome}" class="form-control" placeholder="Nome do Produto"
+								required>
 							<label for="validationCustom01">Nome do Produto</label>
 							<div th:if="${#fields.hasErrors('nome')}" class="alert alert-danger" th:errors="*{nome}">
 							</div>
 						</div>
 						<div class="col">
-							<label for="inputState" class="form-label"><strong> Selecione a categoria</strong></label>
-							<select class="form-select" name="categoria" th:value="${produto.categoria}" required>
-								<option >Categoria do Produto</option>
-								<option value="Alimento"selected>Alimento</option>
+							<label for="inputState" class="form-label" style="color: rgb(32, 32, 32);"><strong>
+									Selecione a categoria</strong></label>
+							<select class="form-select" th:field="*{categoria}" required>
+								<option value="">Categoria do Produto</option>
+								<option value="Alimento" selected>Alimento</option>
 								<option value="Vestuario">Vestuário</option>
 								<option value="Artesanato">Artesanato</option>
 								<option value="Acessório">Acessório</option>
@@ -51,55 +52,54 @@
 						</div>
 						<br>
 						<div class="col">
-							<label for="form-label"><strong>Preço</strong></label>
-							<input type="number" step="0.01" name="preco" th:value="${produto.preco}"
-								class="form-control" placeholder="R$" required>
+							<label for="form-label" style="color: rgb(0, 0, 0);"><strong>Preço</strong></label>
+							<input type="number" step="0.01" th:field="*{preco}" class="form-control" placeholder="R$"
+								required>
 							<div th:if="${#fields.hasErrors('preco')}" class="alert alert-danger" th:errors="*{preco}">
 							</div>
+
 						</div>
 						<br>
 						<div class="form-floating mb-3">
-							<input type="text" name="descricao" class="form-control" th:value="${produto.descricao}"
-								maxlength="275" placeholder="Descrição" style="height: 80px" required>
+							<input type="text" class="form-control" th:field="*{descricao}" maxlength="275"
+								placeholder="Descrição" style="height: 80px" required>
 							<label class="form-label" for="floatingInput">Descrição</label>
 							<div th:if="${#fields.hasErrors('descricao')}" class="alert alert-danger"
 								th:errors="*{descricao}"></div>
-							<div class="form-text">Limite máximo de 255 caracteres</div>
+							<div class="form-text" style="color: rgb(224, 13, 13);">Limite máximo de 255 caracteres
+							</div>
 						</div>
+
 						<div class="form-floating">
-							<input type="date" name="dataVenda" class="form-control" th:value="${produto.dataVenda}"
-								placeholder="Data de venda" required>
+							<input type="date" class="form-control" th:field="*{dataVenda}" placeholder="Data de venda"
+								required>
 							<label for="">Data de venda</label>
 							<div th:if="${#fields.hasErrors('dataVenda')}" class="alert alert-danger"
 								th:errors="*{dataVenda}"></div>
 						</div>
 						<br>
 						<div class="form-floating">
-							<input type="time" name="horario" class="form-control" th:value="${produto.horario}"
-								placeholder="Horário de Venda" required>
-							<label for="">Horário de Venda</label>
+							<input type="time" class="form-control" th:field="*{horario}" placeholder="Horário de Venda"
+								required>
+							<label>Horário de Venda</label>
 							<div th:if="${#fields.hasErrors('horario')}" class="alert alert-danger"
 								th:errors="*{horario}"></div>
 						</div>
+
 						<br>
 						<div class="input-group mb-3">
-							<input type="file" name="file" class="form-control" id="fileInput"
-								th:value="${produto.nomeImg}">
+							<input type="file" name="file" class="form-control">
 							<label class="input-group-text" for="inputGroupFile02">Foto do Produto</label>
-							<div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
 						</div>
+						<div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
+						<br>
 						<input type="hidden" class="form-text" name="filePath" th:value="${produto.nomeImg}">
-						<!-- Campo de texto para exibir o caminho da imagem -->
-						<div class="mb-3">
-							<input type="hidden" class="form-control" id="filePath" th:value="${produto.nomeImg}"
-								readonly>
-						</div>
+
 						<div>
 							<button type="submit" class="btn btn-success">Cadastrar</button>
 						</div>
-					</div>
+
 				</form>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -107,4 +107,5 @@
 		integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
 		crossorigin="anonymous"></script>
 </body>
+
 </html>

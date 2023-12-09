@@ -218,7 +218,7 @@
       </style>
     <body>
         <div class="row" >
-        <div class="sidebar col-3">
+        <div class="sidebar col-sm-1 col-3">
           <div class="user-img-logo"><a href="/"><img src="/img/logo.png" style="max-width: 150px; " ></a></div>
           <div class="menu-btn">
             <i class="bi bi-justiy"></i>
@@ -330,9 +330,9 @@
         </div>
       
       
-      <div class="col-10">
+      <div class=" col-10">
         <div class="row">
-            <div class="col p-4"  th:each="p : ${produto}">
+            <div class=" col-sm-2 col p-4"  th:each="p : ${produto}">
                 <div class="card" style="width: 17rem; height: 550px;">
                     <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >
                     <div class="card-body">

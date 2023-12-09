@@ -338,7 +338,7 @@
                                 <img th:src="@{'/upload/' + ${c.caminhoImg}}" class="img-fluid rounded-start" style="min-height:150px; min-width: 150px;">
     
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-8">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${c.nome}">Pedro</h5>
                                     <p> <i class="bi bi-envelope-at"></i> : <span th:text="${c.email}"></span></p>
@@ -350,7 +350,7 @@
                                     </div>
                                     <p></p>
                                     <div>                          
-                                        <button type="button" class="btn btn-success"><a th:href="@{/produtos/{id}/cadastro-produto (id=${c.id})}" 
+                                        <button type="button" class="btn btn-success"><a th:href="@{/produtos/{id}/cadastro (id=${c.id})}" 
                                             class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Add Produtos <i class="bi bi-plus-lg"></i></a></button> 
                                      </div>
                                     

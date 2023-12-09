@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
@@ -28,7 +29,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 @RequestMapping("/produtos")
 public class ProdutosController {
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
-	private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
+	private static String caminhoImagensProduto = "C:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -46,13 +47,13 @@ public class ProdutosController {
 		return mv;
 	}
 
- 	@GetMapping("/{id}/cadastro-produto")
+ 	@GetMapping("/{id}/cadastro")
     public String formProduto(@PathVariable Long id, Produto produto) {
-        return "cadastros/formProdutos";
+        return "cadastros/formProduto";
     }
 
     @GetMapping("/{id}")
-	public ModelAndView verProdutos(@PathVariable Long id, Produto produto) {
+	public ModelAndView verProdutos(@PathVariable Long id,Produto produto) {
 		Optional<Comerciante> opt = cr.findById(id);
 		ModelAndView md = new ModelAndView();
 
@@ -71,8 +72,8 @@ public class ProdutosController {
 		return md;
 	}
 
-	@PostMapping("/{idComerciante}/cadastro-produto")
-	public String cadastrarProduto(@PathVariable Long idComerciante, Produto produto, BindingResult result,
+	@PostMapping("/{idComerciante}/cadastro")
+	public String cadastrarProduto(@PathVariable Long idComerciante,@Valid Produto produto, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 
 		if (result.hasErrors()) {
@@ -80,7 +81,6 @@ public class ProdutosController {
 			return formProduto(idComerciante, produto);
 		}
 		
-
 		System.out.println("Id do comerciante:" + idComerciante);
 		System.out.println(produto);
 
@@ -88,10 +88,8 @@ public class ProdutosController {
 
 		if (opt.isEmpty()) {
 			return "redirect:/comerciantes";
-		}
-                Comerciante comerciante = opt.get();
-				produto.setComerciante(comerciante);
-				pr.save(produto);
+		} 
+		
 		try {
 			if (!arquivo.isEmpty() && arquivo != null) {
 				String contentType = arquivo.getContentType();
@@ -108,7 +106,6 @@ public class ProdutosController {
 				Files.write(caminho, bytes);
 
 				produto.setNomeImg(String.valueOf(produto.getId()) + nomeOriginal); 
-				pr.save(produto);
 				System.out.println("Caminho completo do arquivo: " + caminho);
 
 				} else {
@@ -124,17 +121,18 @@ public class ProdutosController {
 				// "perfilNulo.png"
 				produto.setNomeImg("imgPadrao.png");
 			}
-
+Comerciante comerciante = opt.get();   
+				produto.setComerciante(comerciante);
 			pr.save(produto);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/produtos";
+		return "redirect:/produtos/{idComerciante}";
 	}
     @GetMapping("/{idComerciante}/produtos/{idProduto}/edit-produto")
-	public ModelAndView selecionarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
+	public ModelAndView EditProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
 
 		ModelAndView md = new ModelAndView();
 		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
@@ -153,7 +151,7 @@ public class ProdutosController {
 			return md;
 		}
 
-		md.setViewName("cadastros/EditProduto");
+		md.setViewName("cadastros/editProdutos");
 		md.addObject("produto", produto);
 		md.addObject("comerciante", comerciante);
 
