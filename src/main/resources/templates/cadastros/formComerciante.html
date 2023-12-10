@@ -30,14 +30,14 @@
 </head>
 
 <body style="background-color:honeydew;">
-	<div th:replace="~{menu :: menu}"></div>
+	<div th:replace="~{fragments/menu :: menu}"></div>
 	<div class="row">
 		<div>
 			<div class="row g-3 col-md-8" style=" margin: 5% auto;">
 				<h1 style="text-align: center;">Faça seu Cadastro</h1>
-				<div class="col-md-5 offset-md-3" style="background-color: rgb(97, 197, 114); border-radius: 5%;">
+				<div class="col-md-5 offset-md-3" style="background-color: rgb(222, 226, 222); border-radius: 3px; width:50%; padding: 10px;">
 
-					<form action="/comerciantes" enctype="multipart/form-data" method="post" th:object="${comerciante}">
+					<form action="/login/cadastro-comerciante" enctype="multipart/form-data" method="post" th:object="${comerciante}">
 						<div style=" margin: 5% auto;">
 
 							<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -61,7 +61,7 @@
 
 							</div>
 							
-							<div class="form-floating col-md-5">
+							<div class="form-floating  ">
 								<input type="password" class="form-control" minlength="8" th:field="*{senha}" placeholder="Senha" id="senha" required> <i
 									id="icon" onclick="mostraSenha()"></i>
 								<label>Senha</label>
@@ -83,10 +83,10 @@
 								}
 							</script>
 							<br>
-							<div class=" col-md-5">
-								<label class="form-label " style="color: white;"><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
+							<div class=" form-floating mb-3  ">
 								<input type="tel" class="form-control " placeholder="DD + Número" pattern="^\S*$" th:field="*{numWhats}" maxlength="11" minlength="11" required>
-								<div class="form-text" style="color: white;">Ex: (84)98765-4321</div>
+								<label class="form-label " style="color: rgba(0, 0, 0, 0.466);"><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
+								<div class="form-text" style="color: rgb(0, 0, 0);">Ex: (84)98765-4321</div>
 								<div th:if="${#fields.hasErrors('numWhats')}" class="alert alert-danger" th:errors="*{numWhats}"></div>
 							</div>
 
@@ -95,12 +95,17 @@
 
 							<br>
 							<div class="input-group col-md-5">
-								<input type="file" class="form-control" name="file"  accept="image/*" >
+								<input type="file" class="form-control" name="file"  accept="image/*">
 								<label class="input-group-text">Foto de Perfil</label>
 							  </div>
 							  <input type="hidden"class="form-text" name="filePath" th:value="${comerciante.nomeImg}">
 							  <div th:if="${erro}" th:text="${erro}" class="alert alert-danger"></div>
 							<br>
+							<div class="form-floating" style="display: none;">
+                   			 <select name="perfil" id="perfil" class="form-control" th:field="*{perfil}">
+                        <option th:each="perfil : ${perfils}" th:text="${perfil}" th:value="${perfil}"></option>
+                    </select>
+                </div>
 
 							<div>
 								<button type="submit" class="btn btn-success">Cadastrar</button>
