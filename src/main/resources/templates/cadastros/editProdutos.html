@@ -16,7 +16,7 @@
 	<div th:replace="~{fragments/menu :: menu}"></div>
 	<div class="row">
 		<div class="row g-3 col-md-8 " style=" margin: auto;">
-			<h1 style="text-align: center;">Adicionar Produto</h1>
+			<h1 style="text-align: center;">Atualização de Produto</h1>
 			<div class="col-md-6 offset-md-3" style="background-color: rgba(233, 230, 230, 0.849); border-radius:5px;">
 				<form th:action="@{/produtos/{idComerciante}/cadastro(idComerciante=${comerciante.id}) }" th:object="${produto}"
 					enctype="multipart/form-data" method="post">

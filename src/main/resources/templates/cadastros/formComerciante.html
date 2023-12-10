@@ -84,8 +84,8 @@
 							</script>
 							<br>
 							<div class=" form-floating mb-3  ">
-								<label class="form-label " style="color: rgba(0, 0, 0, 0.164);"><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
 								<input type="tel" class="form-control " placeholder="DD + Número" pattern="^\S*$" th:field="*{numWhats}" maxlength="11" minlength="11" required>
+								<label class="form-label " style="color: rgba(0, 0, 0, 0.466);"><b><i class="bi bi-whatsapp"></i> Whatsapp </b></label>
 								<div class="form-text" style="color: rgb(0, 0, 0);">Ex: (84)98765-4321</div>
 								<div th:if="${#fields.hasErrors('numWhats')}" class="alert alert-danger" th:errors="*{numWhats}"></div>
 							</div>

@@ -20,20 +20,32 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
-import projeto.shao.commerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Enums.Perfil;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 
+
 @Controller
 @RequestMapping("/comerciantes")
 public class ComerciantesControllers {
-
 	// private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
-	private static String caminhoImagens = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
-	private static String caminhoImagensProduto = "D:\\Usuario\\Área de Trabalho\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
+	private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
+	public static String getCaminhoImagens() {
+		return caminhoImagens;
+	}
+
+	public static void setCaminhoImagens(String caminhoImagens) {
+		ComerciantesControllers.caminhoImagens = caminhoImagens;
+	}
+
+
+
+	private static String caminhoImagensProduto = "D:/Usuario/Shao-commerce/src/main/resources/static/uploadProduto/";
+
+	
 
 	@Autowired
 	private ComercianteRepository cr;
@@ -43,59 +55,62 @@ public class ComerciantesControllers {
 
 	@GetMapping("/formComerciante")
 	public ModelAndView cadastro(Comerciante comerciante) {
-		 ModelAndView mv = new ModelAndView("cadastros/form");
+		 ModelAndView mv = new ModelAndView("cadastros/formComerciante");
         mv.addObject("comerciante", comerciante);
-        Perfil[] profiles = {Perfil.ADMIN, Perfil.COMERCIANTE};
+        Perfil[] profiles = {Perfil.COMERCIANTE};
         mv.addObject("perfils", profiles);
+		
+
         return mv;
 		
 	}
 
 	@PostMapping
-	public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
-		 ModelAndView mv = new ModelAndView("cadastros/form");
-		if (result.hasErrors()) {
-			return cadastro(comerciante);
-		}
-		try {
-			if (arquivo != null && !arquivo.isEmpty()) {
-				// Verificar se o arquivo é uma imagem
-				String contentType = arquivo.getContentType();
-				if (contentType != null && contentType.startsWith("image")) {
-					// Processar e salvar a nova imagem
-					cr.save(comerciante);
-					byte[] bytes = arquivo.getBytes();
-					String nomeOriginal = arquivo.getOriginalFilename();
-					Path caminho = Paths.get(caminhoImagens, String.valueOf(comerciante.getId()) + nomeOriginal).toAbsolutePath();
+public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
+        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+    System.out.println("Caminho do arquivo: " + caminhoImagens);
+    ModelAndView mv = new ModelAndView("cadastros/formComerciante");
+    if (result.hasErrors()) {
+        return cadastro(comerciante);
+    }
+    try {
+        if (arquivo != null && !arquivo.isEmpty()) {
+            // Verificar se o arquivo é uma imagem
+            String contentType = arquivo.getContentType();
+            if (contentType != null && contentType.startsWith("image")) {
+                // Processar e salvar a nova imagem
+                cr.save(comerciante);
+                byte[] bytes = arquivo.getBytes();
+                String nomeOriginal = arquivo.getOriginalFilename();
+                Path caminho = Paths.get(caminhoImagens).toAbsolutePath().resolve(String.valueOf(comerciante.getId()) + nomeOriginal);
 
-					Files.write(caminho, bytes);
-					System.out.println(caminhoImagens);
+                Files.write(caminho, bytes);
 
-					comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
-				} else {
-					model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
-					return mv; // substitua "sua-pagina" pelo nome da sua página Thymeleaf
-				}
-			} else if (filePath != null && !filePath.isEmpty()) {
-				// Se não houver uma nova imagem e há um caminho existente, use o caminho
-				// existente
-				comerciante.setNomeImg(filePath);
-			} else {
-				// Se não houver uma nova imagem e nenhum caminho existente, defina como
-				// "perfilNulo.png"
-				comerciante.setNomeImg("perfilNulo.png");
-			}
+                System.out.println(caminho);
 
-			cr.save(comerciante);
-			System.out.println("Comerciante Salvo");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		mv.setViewName("home/vendedores");
-		return mv;
-	}
+                comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
+            } else {
+                model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
+                return mv;
+            }
+        } else if (filePath != null && !filePath.isEmpty()) {
+            // Se não houver uma nova imagem e há um caminho existente, use o caminho
+            // existente
+            comerciante.setNomeImg(filePath);
+        } else {
+            // Se não houver uma nova imagem e nenhum caminho existente, defina como
+            // "perfilNulo.png"
+            comerciante.setNomeImg("perfilNulo.png");
+        }
 
+        cr.save(comerciante);
+        System.out.println("Comerciante Salvo");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    mv.setViewName("home/vendedores");
+    return mv;
+}
 	@GetMapping("/comerciantes")
 	public ModelAndView listar() {
 		List<Comerciante> comerciantes = cr.findAll();
@@ -146,8 +161,11 @@ public class ComerciantesControllers {
 			return md;
 		}
 		Comerciante comerciante = opt.get();
-		md.setViewName("cadastros/form");
+		md.setViewName("cadastros/editComerciante");
 		md.addObject("comerciante", comerciante);
+		Perfil[] profiles = {Perfil.COMERCIANTE};
+        md.addObject("perfils", profiles);
+		md.addObject("senha", comerciante.getSenha());
 
 		return md;
 	}

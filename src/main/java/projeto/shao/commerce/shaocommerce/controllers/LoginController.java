@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
-import projeto.shao.commerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Enums.Perfil;
 import projeto.shao.commerce.shaocommerce.models.Cliente;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.repositories.ClienteRepository;
@@ -27,8 +27,7 @@ import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 @RequestMapping("/login")
 public class LoginController {
     // private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
-	private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
-
+	private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
     @Autowired
     private ClienteRepository cl;
     @Autowired
@@ -48,7 +47,7 @@ public class LoginController {
 
      @GetMapping("/formComerciante")
 	public ModelAndView cadastro(Comerciante comerciante) {
-		 ModelAndView mv = new ModelAndView("cadastros/form");
+		 ModelAndView mv = new ModelAndView("cadastros/formComerciante");
         mv.addObject("comerciante", comerciante);
         Perfil[] profiles = {Perfil.COMERCIANTE};
         mv.addObject("perfils", profiles);

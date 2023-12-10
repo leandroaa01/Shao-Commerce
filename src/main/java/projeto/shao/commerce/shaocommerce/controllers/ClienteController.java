@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
-import projeto.shao.commerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Enums.Perfil;
 import projeto.shao.commerce.shaocommerce.models.Cliente;
 import projeto.shao.commerce.shaocommerce.repositories.ClienteRepository;
 

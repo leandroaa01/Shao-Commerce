@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import projeto.shao.commerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Enums.Perfil;
 
 @Entity
 public class Cliente {

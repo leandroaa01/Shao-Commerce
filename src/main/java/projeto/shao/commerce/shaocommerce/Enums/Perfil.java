@@ -1,4 +1,4 @@
-package projeto.shao.commerce.Enums;
+package projeto.shao.commerce.shaocommerce.Enums;
 
 public enum Perfil {
     
