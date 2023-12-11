@@ -4,12 +4,11 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" type="x-icon"  href="/img/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Meus Produtos</title>
+    <title>Shao Commerce - Comerciantes</title>
 </head>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
@@ -219,143 +218,86 @@
       </style>
     <body>
       <div class="row" >
-        <div class="sidebar col-3">
-          <div class="user-img-logo"><a href="/"><img src="/img/logo.png" style="max-width: 150px; " ></a></div>
+        <div class="sidebar col-lg-1 col-3">
+          <div class="user-img-logo "><a href="/"><img src="/img/logo.png" style="max-width: 180px; " ></a></div>
           <div class="menu-btn">
             <i class="bi bi-justiy"></i>
           </div>
           <div class="head">
             <div class="user-img">
-              <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}"/>
+              <img src="/img/perfilNulo.png"/>
             </div>
             <div class="user-details">
-              <p class="title" th:text="${#authentication.getPrincipal().getPerfil()}">Não Logado</p>
-              <p class="name" th:text="${#authentication.getPrincipal().getNome()}">User</p>
+              <p class="title">Não Logado</p>
+              <p class="name" >User</p>
             </div>
           </div>
           <div class="nav">
             <div class="menu">
               <p class="title">Pricincipal</p>
               <ul>
+                </li>
+                <li class="active" >
+                  <a href="/" >
+                    <i class="bi bi-people"></i>
+                    <span class="text">Vendedores</span>
+                  </a>
+                </li>
                 <li >
                   <a href="/produtos">
-                    <i class="bi bi-house"></i>
+                    <i class="bi bi-cup-hot"></i>
                     <span class="text">Produtos</span>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
-                    <i class="bi bi-bag"></i>
-                    <span class="text">Meus Produtos</span>
-                    <i class="arrow ph-bold ph-caret-down"></i>
-                  </a>
-                  <ul class="sub-menu">
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-eye"></i>
-                        <span class="text">Ver Produtos</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-cart-plus"></i>
-                        <span class="text">Cadastra Produto</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="active" >
-                  <a href="#">
-                    <i class="bi bi-people"></i>
-                    <span class="text">Comerciantes</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="bi bi-person-gear"></i>
-                    <span class="text">Controle</span>
-                    <i class="arrow ph-bold ph-caret-down"></i>
-                  </a>
-                  <ul class="sub-menu">
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-person-plus"></i>
-                        <span class="text">Cadastro de Vendedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-person-plus"></i>
-                        <span class="text">Cadastro de Usuários</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/form">
-                        <i class="bi bi-person-vcard"></i>
-                        <span class="text">Controle de Vendedores</span>
-                      </a>
-                    </li>
-                    <li>
-                    
-                      <a href="#">  
-                        <i class="bi bi-person-vcard"></i>
-                        <span class="text">Controle de Usuários</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
               </ul>
             </div>
-            <div class="menu">
-              <p class="title">Conta</p>
-              <ul>
-                <li>
-                  <a href="#">
-                    <i class="bi bi-pencil-square"></i>
-                    <span class="text">Editar Perfil</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+    
           </div>
           <div class="menu">
             <ul>
               <li>
-                <a th:href="@{/logout}">
-                  <i class="bi bi-box-arrow-right"></i>
-                  <span class="text">Sair</span>
+                <a th:href="@{/login}">
+                  <i class="bi bi-person-bounding-box"></i>
+                  <span class="text">Login</span>
                 </a>
               </li>
             </ul>
+          </div>
         </div>
-      
-      </div>
-      
-      
       <div class="col">
-        <div class="row">
-            <div class="col  p-4 "  th:each="p : ${produtos}">
-                <div class="card" style="width: 17rem; height: 600px;">
-                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >
-                    <div class="card-body">
-                        <h4 class="card-title" th:text="${p.nome}"  style="color: #39C81B;">Nome do Produto:</h4>
-                        <p class="card-text"><b>Categoria:</b> <span th:text="${p.categoria}"></span> </p>
-                        <p class="card-text"><b> Data de venda:</b> 
-                             <pan th:text="${#temporals.format(p.dataVenda, 'dd/MM/yyyy')}"></p>
-                         <p class="card-text"><b> Horário de venda:</b>
-                             <span th:text="${p.horario}"></span> min</p>
-                        <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
-                        <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
-                    <div style="text-align: right; margin: 1px;">
-                        <a th:href="@{'https://wa.me/55'+${comerciante.numWhats}}" class="btn btn-success" target="_blank"><i class="bi bi-whatsapp"></i></a>
-                        <a th:href="@{/comerciantes/{idComerciante}/produtos/{idProduto}/apagar(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                        <a th:href="@{/produtos/{idComerciante}/produtos/{idProduto}/edit-produto(idComerciante=${comerciante.id}, idProduto=${p.id})}"  class="btn btn-primary"><i class="bi bi-pen-fill"></i></a>
-                        </div>  </div>
+            <div class="row">     
+                <div class="col-lg-4 p-3" th:each="c : ${comerciantes}">
+                    <div class="card mb-3" style="min-width:350px; max-width: 500px; max-height: 250px; min-height: 200px; ">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img th:src="@{'/upload/' + ${c.caminhoImg}}" class="card-img-top" style="min-height:218px; min-width: 150px; max-width:101px; max-height: 220px;">
+    
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${c.nome}">Pedro</h5>
+                                    <p> <i class="bi bi-envelope-at"></i> : <span th:text="${c.email}" style="font-size: 15px;"></span></p>
+                                    <p> <i class="bi bi-whatsapp"></i> : <span class="card-text" th:text="${c.numWhats}"></span></p>
+    
+                                    <div >
+                                       <button type="button" class="btn btn-warning"><a th:href="@{/produtos/{id}(id=${c.id})}" 
+                                        class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Ver Produtos <i class="bi bi-eye"></i></a></button> 
+                                    </div>
+                                    <p></p> 
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>  
-            <div th:if="${#lists.isEmpty(produtos)}">
-                <h1 style="text-align: center; margin-top: 30%;" >Nenhum produto cadastrado</h1>
+                <div th:if="${#lists.isEmpty(comerciantes)}">
+                    <h1 style="text-align: center; margin-top: 30%;" >Nenhum Comerciante cadastrado</h1>
+                </div>
             </div>
+      </div>
+
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"
     integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw=="
@@ -383,4 +325,5 @@ $(".menu-btn").click(function () {
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

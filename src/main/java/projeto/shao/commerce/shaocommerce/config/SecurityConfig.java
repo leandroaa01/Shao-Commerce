@@ -25,12 +25,14 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http)throws Exception{
+
         http
             .authorizeHttpRequests()
-                .requestMatchers("/produtos").permitAll()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/login/conta").permitAll()
                 .requestMatchers("/login/formComerciante").permitAll()
                 .requestMatchers("/login/formUser").permitAll()
+                .requestMatchers("/produtos/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/login/cadastro-user").permitAll()
                 .requestMatchers(HttpMethod.POST,"/login/cadastro-comerciante").permitAll()
                 .requestMatchers("/img/**").permitAll()

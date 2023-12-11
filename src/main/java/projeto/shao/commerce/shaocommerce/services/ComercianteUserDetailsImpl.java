@@ -36,6 +36,9 @@ public class ComercianteUserDetailsImpl implements UserDetails  {
        public String displayImagem(){
         return comerciante.getNomeImg();
        }
+       public Perfil getPerfil(){
+        return comerciante.getPerfil();
+       }
     @Override
     public String getPassword() {    
         return  comerciante.getSenha(); 

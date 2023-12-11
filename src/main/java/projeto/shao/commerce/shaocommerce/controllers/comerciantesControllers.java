@@ -33,7 +33,8 @@ import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
 public class ComerciantesControllers {
 	// private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
 	// private static String caminhoImagensProduto = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\uploadProduto\\";
-	private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
+	//private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
+    private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
 	public static String getCaminhoImagens() {
 		return caminhoImagens;
 	}
@@ -44,7 +45,8 @@ public class ComerciantesControllers {
 
 
 
-	private static String caminhoImagensProduto = "D:/Usuario/Shao-commerce/src/main/resources/static/uploadProduto/";
+	//private static String caminhoImagensProduto = "D:/Usuario/Shao-commerce/src/main/resources/static/uploadProduto/";
+    private static String caminhoImagensProduto = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\uploadProduto\\";
 
 	
 

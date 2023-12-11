@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Página Inicial</title>
+    <title>Shao Commerce - Produtos</title>
 </head>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
@@ -228,7 +228,7 @@
               <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}"/>
             </div>
             <div class="user-details">
-              <p class="title">Não Logado</p>
+              <p class="title" th:text="${#authentication.getPrincipal().getPerfil()}">Não Logado</p>
               <p class="name" th:text="${#authentication.getPrincipal().getNome()}">User</p>
             </div>
           </div>
