@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Util.PasswordUtil;
 import projeto.shao.commerce.shaocommerce.models.Cliente;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.repositories.ClienteRepository;
@@ -33,10 +34,7 @@ public class LoginController {
     @Autowired
 	private ComercianteRepository cr;
 
-    @GetMapping("/")
-    public String login(){
-        return "login/login";
-    }  
+    
     @GetMapping("/conta")
     public String conta(){
         return "login/tipo";
@@ -58,6 +56,8 @@ public class LoginController {
 	@PostMapping("/cadastro-comerciante")
 	public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+		String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
+        comerciante.setSenha(hashSenha);
 		 ModelAndView mv = new ModelAndView("login/login");
 		try {
 			if (arquivo != null && !arquivo.isEmpty()) {
@@ -108,6 +108,8 @@ public class LoginController {
     @PostMapping("/cadastro-user")
 	public ModelAndView salvarUser(@Valid Cliente cliente, BindingResult result) {
           ModelAndView mv = new ModelAndView("cadastros/formUser");
+		  String hashSenha = PasswordUtil.encoder(cliente.getSenha());
+        cliente.setSenha(hashSenha);
         mv.addObject("cliente", cliente);
 
 		if (result.hasErrors()) {

@@ -53,20 +53,21 @@
     
 </style>
 <body>
+   
  <section class="container" >
-    <form>
+    <form method="post" th:action="@{/login}">
         <img src="/img/favicon.png"  class="img-thumbnail  mx-auto d-block">
         <div class="form-floating mb-3 col ">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
             <label for="floatingInput">Email: </label>
           </div>
           <div class="form-floating mb-3 col">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
             <label for="floatingPassword">Senha:</label>
           </div>
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Manter conectado</label>  <a href="/login/conta">Registra-se </a>
+          <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+          <label class="form-check-label" for="remember-me">Manter conectado</label>  <a href="/login/conta">Registra-se </a>
         </div>
         <button type="submit" class="btn btn-success">Entrar</button> 
       </form>

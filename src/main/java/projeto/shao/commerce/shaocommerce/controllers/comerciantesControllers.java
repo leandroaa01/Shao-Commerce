@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Util.PasswordUtil;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
@@ -69,6 +70,8 @@ public class ComerciantesControllers {
 public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
         @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
     System.out.println("Caminho do arquivo: " + caminhoImagens);
+	String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
+        comerciante.setSenha(hashSenha);
     ModelAndView mv = new ModelAndView("cadastros/formComerciante");
     if (result.hasErrors()) {
         return cadastro(comerciante);
@@ -170,6 +173,70 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
 		return md;
 	}
 
-	
+	@GetMapping("/editar-perfil")
+	public ModelAndView EditaComerciante(@RequestParam("id") Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Comerciante> opt = cr.findById(id);
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/comerciantes");
+			return md;
+		}
+		Comerciante comerciante = opt.get();
+		md.setViewName("cadastros/editComerciante");
+		md.addObject("comerciante", comerciante);
+		Perfil[] profiles = {Perfil.COMERCIANTE};
+        md.addObject("perfils", profiles);
+		md.addObject("senha", comerciante.getSenha());
+
+		return md;
+	}
+
+	@PostMapping("/editar-perfil")
+	public ModelAndView salvarEdicaoComerciante(@Valid Comerciante comerciante, BindingResult result,
+        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+    System.out.println("Caminho do arquivo: " + caminhoImagens);
+    ModelAndView mv = new ModelAndView("cadastros/formComerciante");
+    if (result.hasErrors()) {
+        return cadastro(comerciante);
+    }
+    try {
+        if (arquivo != null && !arquivo.isEmpty()) {
+            // Verificar se o arquivo é uma imagem
+            String contentType = arquivo.getContentType();
+            if (contentType != null && contentType.startsWith("image")) {
+                // Processar e salvar a nova imagem
+                cr.save(comerciante);
+                byte[] bytes = arquivo.getBytes();
+                String nomeOriginal = arquivo.getOriginalFilename();
+                Path caminho = Paths.get(caminhoImagens).toAbsolutePath().resolve(String.valueOf(comerciante.getId()) + nomeOriginal);
+
+                Files.write(caminho, bytes);
+
+                System.out.println(caminho);
+
+                comerciante.setNomeImg(String.valueOf(comerciante.getId()) + nomeOriginal);
+            } else {
+                model.addAttribute("erro", "Apenas arquivos de imagem são permitidos.");
+                return mv;
+            }
+        } else if (filePath != null && !filePath.isEmpty()) {
+            // Se não houver uma nova imagem e há um caminho existente, use o caminho
+            // existente
+            comerciante.setNomeImg(filePath);
+        } else {
+            // Se não houver uma nova imagem e nenhum caminho existente, defina como
+            // "perfilNulo.png"
+            comerciante.setNomeImg("perfilNulo.png");
+        }
+
+        cr.save(comerciante);
+        System.out.println("Comerciante Salvo");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    mv.setViewName("home/index");
+    return mv;
+
+}
 
 }

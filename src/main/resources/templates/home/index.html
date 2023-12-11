@@ -225,11 +225,11 @@
           </div>
           <div class="head">
             <div class="user-img">
-              <img src="/img/perfilNulo.png" alt="" />
+              <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}"/>
             </div>
             <div class="user-details">
               <p class="title">Não Logado</p>
-              <p class="name">User</p>
+              <p class="name" th:text="${#authentication.getPrincipal().getNome()}">User</p>
             </div>
           </div>
           <div class="nav">
@@ -309,7 +309,13 @@
               <p class="title">Conta</p>
               <ul>
                 <li>
-                  <a href="#">
+                  <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
+                    <i class="bi bi-pencil-square"></i>
+                    <span class="text">Editar Perfil</span>
+                  </a>
+                </li>
+                <li>
+                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>
@@ -320,7 +326,7 @@
           <div class="menu">
             <ul>
               <li>
-                <a href="#">
+                <a th:href="@{/logout}">
                   <i class="bi bi-box-arrow-right"></i>
                   <span class="text">Sair</span>
                 </a>

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.Util.PasswordUtil;
 import projeto.shao.commerce.shaocommerce.models.Cliente;
 import projeto.shao.commerce.shaocommerce.repositories.ClienteRepository;
 
@@ -47,6 +48,9 @@ public class ClienteController {
     @PostMapping
 	public ModelAndView salvarUser(@Valid Cliente cliente, BindingResult result) {
          ModelAndView mv = new ModelAndView("login");
+
+         String hashSenha = PasswordUtil.encoder(cliente.getSenha());
+        cliente.setSenha(hashSenha);
         mv.addObject("cliente", cliente);
 
 		if (result.hasErrors()) {
