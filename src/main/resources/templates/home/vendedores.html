@@ -256,7 +256,7 @@
                       </a>
                     </li>
                     <li>
-                      <a th:href="@{/produtos/cadastro-Produto(id=${#authentication.getPrincipal.getId()})}">
+                      <a th:href="@{/produtos/{id}/cadastro(id=${#authentication.getPrincipal.getId()})}">
                         <i class="bi bi-cart-plus"></i>
                         <span class="text">Cadastra Produto</span>
                       </a>
@@ -309,7 +309,13 @@
               <p class="title">Conta</p>
               <ul>
                 <li>
-                  <a href="#">
+                  <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
+                    <i class="bi bi-pencil-square"></i>
+                    <span class="text">Editar Perfil</span>
+                  </a>
+                </li>
+                <li>
+                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>
@@ -349,12 +355,12 @@
                                         class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Ver Produtos <i class="bi bi-eye"></i></a></button> 
                                     </div>
                                     <p></p>
-                                    <div>                          
+                                    <div sec:authorize="hasAuthority('ADMIN')" >                          
                                         <button type="button" class="btn btn-success"><a th:href="@{/produtos/{id}/cadastro (id=${c.id})}" 
                                             class="link-offset-2 link-underline link-underline-opacity-0" style="color: white;">Add Produtos <i class="bi bi-plus-lg"></i></a></button> 
                                      </div>
                                     
-                                    <div style="text-align: right;"> 
+                                    <div style="text-align: right;" sec:authorize="hasAuthority('ADMIN')"> 
                                        <a th:href="@{/comerciantes/{id}/remover(id=${c.id})}" class="btn btn-danger" ><i class="bi bi-trash-fill"></i></a>
                                        <a th:href="@{/comerciantes/{id}/selecionar(id=${c.id})}" class="btn btn-primary" ><i class="bi bi-pen-fill"></i></a>
                                     

@@ -245,7 +245,7 @@
                 </li>
                 <li >
                     <li>
-                      <a href="#">
+                      <a th:href="@{/produtos/{id}/cadastro(id=${#authentication.getPrincipal.getId()})}">
                         <i class="bi bi-cart-plus"></i>
                         <span class="text">Cadastrar Produto</span>
                       </a>
@@ -253,7 +253,7 @@
                 
                 </li>
                 <li >
-                  <a href="#">
+                  <a href="/comerciantes/comerciantes">
                     <i class="bi bi-people"></i>
                     <span class="text">Comerciantes</span>
                   </a>
@@ -298,7 +298,13 @@
               <p class="title">Conta</p>
               <ul>
                 <li>
-                  <a href="#">
+                  <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
+                    <i class="bi bi-pencil-square"></i>
+                    <span class="text">Editar Perfil</span>
+                  </a>
+                </li>
+                <li>
+                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>

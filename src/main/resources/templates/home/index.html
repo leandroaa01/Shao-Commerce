@@ -250,15 +250,15 @@
                   </a>
                   <ul class="sub-menu">
                     <li>
-                      <a href="#">
+                      <a th:href="@{/produtos/meus-produtos(id=${#authentication.getPrincipal.getId()})}">
                         <i class="bi bi-eye"></i>
                         <span class="text">Ver Produtos</span>
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a th:href="@{/produtos/{id}/cadastro(id=${#authentication.getPrincipal.getId()})}">
                         <i class="bi bi-cart-plus"></i>
-                        <span class="text">Cadastra Produto</span>
+                        <span class="text">Cadastrar Produto</span>
                       </a>
                     </li>
                   </ul>
@@ -266,7 +266,7 @@
                 <li >
                   <a th:href="@{/comerciantes/comerciantes}" >
                     <i class="bi bi-people"></i>
-                    <span class="text">Vendedores</span>
+                    <span class="text">Comerciantes</span>
                   </a>
                 </li>
                 <li>

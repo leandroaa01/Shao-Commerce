@@ -310,7 +310,13 @@
               <p class="title">Conta</p>
               <ul>
                 <li>
-                  <a href="#">
+                  <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
+                    <i class="bi bi-pencil-square"></i>
+                    <span class="text">Editar Perfil</span>
+                  </a>
+                </li>
+                <li>
+                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>

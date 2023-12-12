@@ -48,8 +48,8 @@ public class ProdutosController {
 		return mv;
 	}
 
- 	@GetMapping("/cadastro-Produto")
-    public String formProduto(@RequestParam("id") Long id, Produto produto) {
+ 	@GetMapping("/{id}/cadastro")
+    public String formProduto(@PathVariable Long id, Produto produto) {
         return "cadastros/formProduto";
     }
 
