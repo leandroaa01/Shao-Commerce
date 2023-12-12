@@ -48,8 +48,8 @@ public class ProdutosController {
 		return mv;
 	}
 
- 	@GetMapping("/{id}/cadastro")
-    public String formProduto(@PathVariable Long id, Produto produto) {
+ 	@GetMapping("/cadastro-Produto")
+    public String formProduto(@RequestParam("id") Long id, Produto produto) {
         return "cadastros/formProduto";
     }
 
@@ -176,5 +176,26 @@ Comerciante comerciante = opt.get();
 
 		return "redirect:/produtos/{idComerciante}";
 	}
+
+	@GetMapping("/meus-produtos")
+	public ModelAndView meusProdutos(@RequestParam("id") Long id,Produto produto) {
+		Optional<Comerciante> opt = cr.findById(id);
+		ModelAndView md = new ModelAndView();
+
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/produtos");
+			return md;
+		}
+
+		Comerciante comerciante = opt.get();
+		md.addObject("comerciante", comerciante);
+
+		List<Produto> produtos = pr.findByComerciante(comerciante);
+		md.addObject("produtos", produtos);
+		md.setViewName("home/meusProdutos");
+
+		return md;
+	}
+
     
 }
