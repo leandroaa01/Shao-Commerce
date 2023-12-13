@@ -1,11 +1,15 @@
 package projeto.shao.commerce.shaocommerce.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
@@ -63,6 +67,39 @@ public class ClienteController {
 
 		return mv;
 	}
+
+    @GetMapping("/editar-perfil")
+	public ModelAndView Editacliente(@RequestParam("id") Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Cliente> opt = cl.findById(id);
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/clientes");
+			return md;
+		}
+		Cliente cliente = opt.get();
+		md.setViewName("cadastros/editUser");
+		md.addObject("cliente", cliente);
+		Perfil[] profiles = {Perfil.CLIENTE};
+        md.addObject("perfils", profiles);
+		md.addObject("senha", cliente.getSenha());
+
+		return md;
+	}
+
+	@PostMapping("/editar-perfil")
+	public ModelAndView salvarEdicaocliente(@Valid Cliente cliente, BindingResult result,
+     Model model) {
+    ModelAndView mv = new ModelAndView("cadastros/formUser");
+    if (result.hasErrors()) {
+        return new ModelAndView("cadastro/formUser");
+    }
+        cl.save(cliente);
+        System.out.println("Atualização Salvo");
+    
+    mv.setViewName("home/index");
+    return mv;
+
+}
 
 
    

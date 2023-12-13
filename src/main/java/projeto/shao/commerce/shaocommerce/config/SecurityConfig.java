@@ -24,12 +24,9 @@ public class SecurityConfig {
     @Autowired
     private ClienteUserDetailsService cl;
 
+   
      @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
-    }
-     @Bean
-    public SecurityFilterChain SecurityFilterChain(HttpSecurity http)throws Exception{
+    public SecurityFilterChain FilterChain(HttpSecurity http)throws Exception{
 
         http
             .authorizeHttpRequests()
@@ -53,16 +50,15 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/produtos")
                 .permitAll()
                 .and()
-            .rememberMe();
             
-            http.logout()
+            
+            .logout()
         .logoutRequestMatcher(
             new AntPathRequestMatcher("/logout", "GET")
         )
         .logoutSuccessUrl("/login");
+        
 
-        http.rememberMe()
-        .key("keyRemember-me");
         
 
         return http.build();
@@ -71,8 +67,16 @@ public class SecurityConfig {
      
          @Autowired
     public void configureBlobal(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(cs).passwordEncoder(passwordEncoder());
-       auth.userDetailsService(cl).passwordEncoder(passwordEncoder());
+       auth
+       .userDetailsService(cs).
+       passwordEncoder(new BCryptPasswordEncoder());
+       auth.
+       userDetailsService(cl)
+       .passwordEncoder(new BCryptPasswordEncoder());
         
-    }
+    } 
+    @Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

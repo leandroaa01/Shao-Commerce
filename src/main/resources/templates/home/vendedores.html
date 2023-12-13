@@ -226,8 +226,9 @@
             <i class="bi bi-justiy"></i>
           </div>
           <div class="head">
-            <div class="user-img">
-              <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}"/>
+            <div class="user-img" >
+              <img src="/img/perfilNulo.png" sec:authorize="hasAuthority('CLIENTE')">
+              <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}" sec:authorize="hasAuthority('COMERCIANTE')"/>
             </div>
             <div class="user-details">
               <p class="title" th:text="${#authentication.getPrincipal().getPerfil()}">Não Logado</p>
@@ -317,7 +318,7 @@
                   </a>
                 </li>
                 <li>
-                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
+                  <a sec:authorize="hasAuthority('CLIENTE')"  th:href="@{/cliente/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>
