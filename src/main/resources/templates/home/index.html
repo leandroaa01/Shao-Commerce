@@ -185,6 +185,7 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s;
+        z-index: 1;
       }
       .sidebar.active .menu > ul > li > a .text::after {
         content: "";
@@ -213,6 +214,7 @@
         border: 1px solid #f6f6f6;
         background-color: #39C81B;
         box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
       }
       
       </style>
@@ -269,8 +271,8 @@
                     <span class="text">Comerciantes</span>
                   </a>
                 </li>
-                <li>
-                  <a href="#">
+                <li  >
+                  <a href="#" sec:authorize="hasAuthority('ADMIN')">
                     <i class="bi bi-person-gear"></i>
                     <span class="text">Controle</span>
                     <i class="arrow ph-bold ph-caret-down"></i>

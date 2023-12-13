@@ -38,7 +38,7 @@ public class LoginController {
     
     @GetMapping("/conta")
     public String conta(){
-        return "login/tipo";
+        return "secure/tipo";
     } 
 
 
@@ -59,7 +59,7 @@ public class LoginController {
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 		String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
         comerciante.setSenha(hashSenha);
-		 ModelAndView mv = new ModelAndView("login/login");
+		 ModelAndView mv = new ModelAndView("secure/login");
 		try {
 			if (arquivo != null && !arquivo.isEmpty()) {
 				// Verificar se o arquivo é uma imagem
@@ -92,7 +92,7 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        mv.setViewName("login/login");
+        mv.setViewName("secure/login");
 		return mv;
 	}
 
