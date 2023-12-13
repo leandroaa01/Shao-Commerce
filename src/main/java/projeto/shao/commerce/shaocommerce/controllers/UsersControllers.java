@@ -18,7 +18,7 @@ public class UsersControllers {
     @GetMapping ("/")
 	public ModelAndView listar() {
 		List<Comerciante> comerciantes = cr.findAll();
-		ModelAndView mv = new ModelAndView("visitante/vendedores");
+		ModelAndView mv = new ModelAndView("public/vendedores");
 		mv.addObject("comerciantes", comerciantes);
 
 		return mv;
@@ -26,7 +26,7 @@ public class UsersControllers {
     
     @GetMapping("/login")
     public String login(){
-        return "login/login";
+        return "secure/login";
     }
     
 }
