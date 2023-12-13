@@ -16,6 +16,16 @@ public class ComercianteUserDetailsImpl implements UserDetails  {
     public ComercianteUserDetailsImpl(Comerciante comerciante){
         this.comerciante = comerciante;
     }
+    public String getNome(){
+        return comerciante.getNome(); 
+       }
+       public Long getId(){
+        return comerciante.getId();
+       }
+       public String displayImagem(){
+        return comerciante.getNomeImg();
+       }
+      
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -26,19 +36,11 @@ public class ComercianteUserDetailsImpl implements UserDetails  {
             perfil = Perfil.COMERCIANTE;
         }
         return AuthorityUtils.createAuthorityList(perfil.toString());
-    }
-    public String getNome(){
-        return comerciante.getNome(); 
-       }
-       public Long getId(){
-        return comerciante.getId();
-       }
-       public String displayImagem(){
-        return comerciante.getNomeImg();
-       }
-       public Perfil getPerfil(){
+    } 
+    public Perfil getPerfil(){
         return comerciante.getPerfil();
        }
+    
     @Override
     public String getPassword() {    
         return  comerciante.getSenha(); 

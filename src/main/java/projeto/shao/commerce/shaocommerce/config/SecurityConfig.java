@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .usernameParameter("email")
                 .loginProcessingUrl("/login")
+                .failureUrl("/login")
                 .defaultSuccessUrl("/produtos")
                 .permitAll()
                 .and()
