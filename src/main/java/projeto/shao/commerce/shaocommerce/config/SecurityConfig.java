@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import projeto.shao.commerce.shaocommerce.services.ClienteUserDetailsService;
 import projeto.shao.commerce.shaocommerce.services.ComercianteUserDetailsService;
 
 @Configuration
@@ -19,11 +20,15 @@ import projeto.shao.commerce.shaocommerce.services.ComercianteUserDetailsService
 public class SecurityConfig {  
     @Autowired
     private ComercianteUserDetailsService cs;
-    @Bean
+
+    @Autowired
+    private ClienteUserDetailsService cl;
+
+     @Bean
     public static PasswordEncoder passwordEncoder(){
         return  new BCryptPasswordEncoder();
     }
-    @Bean
+     @Bean
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http)throws Exception{
 
         http
@@ -64,9 +69,10 @@ public class SecurityConfig {
 
         }
      
-        @Autowired
-         public void configureBlobal(AuthenticationManagerBuilder auth) throws Exception {
+         @Autowired
+    public void configureBlobal(AuthenticationManagerBuilder auth) throws Exception {
        auth.userDetailsService(cs).passwordEncoder(passwordEncoder());
+       auth.userDetailsService(cl).passwordEncoder(passwordEncoder());
         
     }
 }

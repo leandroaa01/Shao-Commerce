@@ -121,7 +121,7 @@ public class LoginController {
 			System.out.println("Cliente Salvo!");
 		
 
-	
+		 mv.setViewName("secure/login");
 		return mv;
 	}
 
