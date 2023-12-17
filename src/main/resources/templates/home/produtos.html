@@ -9,7 +9,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Meus Produtos</title>
+    <title>Shao Commerce - Produtos</title>
 </head>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
@@ -243,31 +243,17 @@
                 <li >
                   <a href="/produtos">
                     <i class="bi bi-house"></i>
-                    <span class="text">Produtos</span>
+                    <span class="text">Todos Produtos</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" sec:authorize="hasAuthority('COMERCIANTE')">
+                  <a th:href="@{/produtos/meus-produtos(id=${#authentication.getPrincipal.getId()})}" sec:authorize="hasAuthority('COMERCIANTE')">
                     <i class="bi bi-bag"></i>
                     <span class="text">Meus Produtos</span>
                     <i class="arrow ph-bold ph-caret-down"></i>
                   </a>
-                  <ul class="sub-menu">
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-eye"></i>
-                        <span class="text">Ver Produtos</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="bi bi-cart-plus"></i>
-                        <span class="text">Cadastra Produto</span>
-                      </a>
-                    </li>
-                  </ul>
                 </li>
-                <li class="active" >
+                <li>
                   <a href="#">
                     <i class="bi bi-people"></i>
                     <span class="text">Comerciantes</span>

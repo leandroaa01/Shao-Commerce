@@ -130,7 +130,7 @@ Comerciante comerciante = opt.get();
 			e.printStackTrace();
 		}
 
-		return "redirect:/produtos/{idComerciante}";
+		return "redirect:/produtos/meus-produtos";
 	}
     @GetMapping("/{idComerciante}/produtos/{idProduto}/edit-produto")
 	public ModelAndView EditProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {

@@ -343,7 +343,7 @@
         <div class="row">
             <div class="  col p-4 "  th:each="p : ${produto}">
                 <div class="card" style="width: 17rem; height: 550px;">
-                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >
+                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top"  style="height: 200px;">
                     <div class="card-body">
                         <h4 class="card-title" th:text="${p.nome}"  style="color: #39C81B;">Nome do Produto:</h4>
                         <p class="card-text"><b>Categoria:</b> <span th:text="${p.categoria}"></span> </p>
