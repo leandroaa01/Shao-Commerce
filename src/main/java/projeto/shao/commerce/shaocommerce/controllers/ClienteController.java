@@ -44,7 +44,7 @@ public class ClienteController {
     public ModelAndView formUser(Cliente cliente) {
         ModelAndView mv = new ModelAndView("cadastros/formUser");
         mv.addObject("cliente", cliente);
-        Perfil[] profiles = {Perfil.ADMIN, Perfil.CLIENTE};
+        Perfil[] profiles = {Perfil.CLIENTE};
         mv.addObject("perfils", profiles);
         return mv;
     }

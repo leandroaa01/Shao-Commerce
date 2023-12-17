@@ -228,6 +228,7 @@
           <div class="head">
             <div class="user-img" >
               <img src="/img/perfilNulo.png" sec:authorize="hasAuthority('CLIENTE')">
+              <img src="/img/perfilNulo.png" sec:authorize="hasAuthority('ADMIN')">
               <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}" sec:authorize="hasAuthority('COMERCIANTE')"/>
             </div>
             <div class="user-details">
@@ -308,8 +309,9 @@
                 </li>
               </ul>
             </div>
-            <div class="menu">
-              <p class="title">Conta</p>
+            <div class="menu"  >
+              <p class="title" sec:authorize="hasAuthority('COMERCIANTE')" >Conta</p>
+              <p class="title" sec:authorize="hasAuthority('CLIENTE')">Conta</p>
               <ul>
                 <li>
                   <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">
@@ -322,6 +324,7 @@
                     <i class="bi bi-pencil-square"></i>
                     <span class="text">Editar Perfil</span>
                   </a>
+                </li>
                 </li>
               </ul>
             </div>

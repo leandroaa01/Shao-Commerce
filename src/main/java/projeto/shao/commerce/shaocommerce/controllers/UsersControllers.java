@@ -28,5 +28,10 @@ public class UsersControllers {
     public String login(){
         return "secure/login";
     }
+
+	@GetMapping("/admin")
+    public String admin(){
+        return "admin/admin";
+    }
     
 }
