@@ -353,6 +353,7 @@
                              <span th:text="${p.horario}"></span> min</p>
                         <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
                         <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
+                        <a th:href="@{'https://wa.me/55'+${p.comerciante.numWhats}}" class="btn btn-success float-end" target="_blank"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>  

@@ -28,8 +28,8 @@ import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 @RequestMapping("/login")
 public class LoginController {
     // private static String caminhoImagens = "C:\\Users\\70204923476\\workspaces\\shaocommerce\\src\\main\\resources\\static\\upload\\";
-	//private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
-	private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
+	private static String caminhoImagens = "D:/Usuario/Shao-commerce/src/main/resources/static/upload/";
+	//private static String caminhoImagens = "C:\\Users\\20201204010025\\Desktop\\ProjetoPI\\Shao-commerce\\src\\main\\resources\\static\\upload\\";
     @Autowired
     private ClienteRepository cl;
     @Autowired
