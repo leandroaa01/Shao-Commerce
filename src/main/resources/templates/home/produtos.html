@@ -255,7 +255,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="/comerciantes/comerciantes">
                     <i class="bi bi-people"></i>
                     <span class="text">Comerciantes</span>
                   </a>
@@ -330,11 +330,12 @@
       
       
       <div class="col">
-        <div class="row">
-          <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
+         <div class="alert alert-success alert-dismissible fade show m-auto pe-auto" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
             <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+        <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Produtos</H1>
+        <div class="row">
             <div class="col  p-4 "  th:each="p : ${produtos}">
                 <div class="card" style="width: 17rem; height: 600px;">
                     <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >

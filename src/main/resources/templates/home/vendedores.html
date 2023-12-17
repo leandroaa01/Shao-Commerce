@@ -341,11 +341,15 @@
       
       </div>
       <div class="col">
-            <div class="row"> 
-              <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
+        
+
+        <div class="alert alert-success alert-dismissible fade show m-auto pe-auto" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
                 <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
+            <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Todos os Cormerciantes</H1>
+            <div class="row"> 
+              
                 <div class="col-lg-4 p-3" th:each="c : ${comerciantes}">
                     <div class="card mb-3" style="min-width:250px; max-width: 500px; ">
                         <div class="row g-0">
