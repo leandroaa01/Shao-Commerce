@@ -9,5 +9,6 @@ import projeto.shao.commerce.shaocommerce.models.Comerciante;
 
 public interface ComercianteRepository extends JpaRepository<Comerciante, Long>{
     Optional<Comerciante>  findByEmail(String email);
+   
 
 }

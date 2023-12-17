@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import projeto.shao.commerce.shaocommerce.Enums.Perfil;
+import projeto.shao.commerce.shaocommerce.models.Cliente;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 
@@ -27,6 +29,28 @@ public class UsersControllers {
     @GetMapping("/login")
     public String login(){
         return "secure/login";
+    }
+
+	@GetMapping("/admin")
+    public String admin(){
+        return "admin/admin";
+    }
+
+	 @GetMapping("/Comerciante")
+	public ModelAndView cadastro(Comerciante comerciante) {
+		 ModelAndView mv = new ModelAndView("admin/comerciante");
+        mv.addObject("comerciante", comerciante);
+        Perfil[] profiles = {Perfil.COMERCIANTE};
+        mv.addObject("perfils", profiles);
+        return mv;
+		
+	} @GetMapping("/user")
+    public ModelAndView formUser(Cliente cliente) {
+        ModelAndView mv = new ModelAndView("admin/cliente");
+        mv.addObject("cliente", cliente);
+        Perfil[] profiles = {Perfil.CLIENTE};
+        mv.addObject("perfils", profiles);
+        return mv;
     }
     
 }
