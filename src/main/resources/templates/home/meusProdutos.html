@@ -229,6 +229,7 @@
           <div class="head">
             <div class="user-img" >
               <img src="/img/perfilNulo.png" sec:authorize="hasAuthority('CLIENTE')">
+              <img src="/img/perfilNulo.png" sec:authorize="hasAuthority('ADMIN')">
               <img th:attr="src=@{'/upload/' + ${#authentication.getPrincipal().displayImagem()}}" sec:authorize="hasAuthority('COMERCIANTE')"/>
             </div>
             <div class="user-details">
@@ -332,6 +333,10 @@
       
       <div class="col">
         <div class="row">
+          <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
+            <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
             <div class="col  p-4 "  th:each="p : ${produtos}">
                 <div class="card" style="width: 17rem; height: 600px;">
                     <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top" >

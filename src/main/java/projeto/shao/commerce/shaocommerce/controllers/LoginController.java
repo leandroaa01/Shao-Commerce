@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.Enums.Perfil;
@@ -56,10 +57,21 @@ public class LoginController {
 
 	@PostMapping("/cadastro-comerciante")
 	public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model, RedirectAttributes attributes) {
 		String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
         comerciante.setSenha(hashSenha);
 		 ModelAndView mv = new ModelAndView("secure/login");
+
+		 if (result.hasErrors()) {
+			return cadastro(comerciante);
+		}
+
+		// Comerciante email = cr.findByEmail(comerciante.getEmail());
+		// if (email != null && !email.getId().equals(comerciante.getId())) {
+		// 	result.rejectValue("email", "error.matricula", "Email já está em uso.");
+		// 	return cadastro(comerciante);
+		// }
+
 		try {
 			if (arquivo != null && !arquivo.isEmpty()) {
 				// Verificar se o arquivo é uma imagem
@@ -88,10 +100,12 @@ public class LoginController {
 			}
 
 			cr.save(comerciante);
+			attributes.addFlashAttribute("mensagem", "Comerciante salvo com sucesso!");
 			System.out.println("Comerciante Salvo");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
         mv.setViewName("secure/login");
 		return mv;
 	}
@@ -107,7 +121,7 @@ public class LoginController {
     }
 
     @PostMapping("/cadastro-user")
-	public ModelAndView salvarUser(@Valid Cliente cliente, BindingResult result) {
+	public ModelAndView salvarUser(@Valid Cliente cliente, BindingResult result, RedirectAttributes attributes) {
           ModelAndView mv = new ModelAndView("cadastros/formUser");
 		  String hashSenha = PasswordUtil.encoder(cliente.getSenha());
         cliente.setSenha(hashSenha);
@@ -119,6 +133,7 @@ public class LoginController {
 		
 			cl.save(cliente);
 			System.out.println("Cliente Salvo!");
+			attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		
 
 		 mv.setViewName("secure/login");

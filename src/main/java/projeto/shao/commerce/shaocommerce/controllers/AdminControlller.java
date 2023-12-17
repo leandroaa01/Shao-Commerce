@@ -123,8 +123,8 @@ public class AdminControlller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        mv.setViewName("home/index");
-		return mv;
+        
+		return listarClientes();
 	}
 
    
@@ -145,8 +145,8 @@ public class AdminControlller {
 			System.out.println("Cliente Salvo!");
 		
 
-		 mv.setViewName("home/index");
-		return mv;
+		 
+		return listarComerciantes();
 	}
 
 

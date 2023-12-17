@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.models.Comerciante;
@@ -75,7 +76,7 @@ public class ProdutosController {
 
 	@PostMapping("/{idComerciante}/cadastro")
 	public String cadastrarProduto(@PathVariable Long idComerciante,@Valid Produto produto, BindingResult result,
-			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 
@@ -122,13 +123,14 @@ public class ProdutosController {
 				// "perfilNulo.png"
 				produto.setNomeImg("imgPadrao.png");
 			}
-Comerciante comerciante = opt.get();   
-				produto.setComerciante(comerciante);
+			Comerciante comerciante = opt.get();   
+			produto.setComerciante(comerciante);
 			pr.save(produto);
-			
+			attributes.addFlashAttribute("mensagem", "Produto salvo com sucesso!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 
 		return "redirect:/produtos/meus-produtos";
 	}
@@ -160,7 +162,7 @@ Comerciante comerciante = opt.get();
 	}
 
     @GetMapping("/{idComerciante}/produtos/{idProduto}/apagar")
-	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
+	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto, RedirectAttributes attributes) {
 
 		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
 		Optional<Produto> optProduto = pr.findById(idProduto);
@@ -171,8 +173,10 @@ Comerciante comerciante = opt.get();
 
 			if (comerciante.getId() == produto.getComerciante().getId()) {
 				pr.delete(produto);
+				attributes.addFlashAttribute("mensagem", "Produto deletado com sucesso!");
 			}
 		}
+		
 
 		return "redirect:/produtos/{idComerciante}";
 	}

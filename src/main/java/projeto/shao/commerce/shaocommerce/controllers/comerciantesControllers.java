@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import projeto.shao.commerce.shaocommerce.Enums.Perfil;
@@ -70,7 +71,7 @@ public class ComerciantesControllers {
 
 	@PostMapping
 public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
-        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model, RedirectAttributes attributes) {
     System.out.println("Caminho do arquivo: " + caminhoImagens);
 	String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
         comerciante.setSenha(hashSenha);
@@ -108,11 +109,13 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
             comerciante.setNomeImg("perfilNulo.png");
         }
 
-        cr.save(comerciante);
+        cr.save(comerciante); 
+        attributes.addFlashAttribute("mensagem", "Comerciante salvo com sucesso!");
         System.out.println("Comerciante Salvo");
     } catch (IOException e) {
         e.printStackTrace();
     }
+  
     mv.setViewName("home/vendedores");
     return mv;
 }
@@ -129,7 +132,7 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
 	
 
 	@GetMapping("/{id}/remover")
-	public String apagarComerciante(@PathVariable Long id) {
+	public String apagarComerciante(@PathVariable Long id, RedirectAttributes attributes) {
 
 		Optional<Comerciante> opt = cr.findById(id);
 
@@ -151,7 +154,9 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
 				pr.deleteAll(produtos);
 			}
 			cr.delete(comerciante);
+            attributes.addFlashAttribute("mensagem", "Comerciante deletado salvo com sucesso!");
 		}
+        
 		return "redirect:/comerciantes";
 	}
 
@@ -195,7 +200,7 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
 
 	@PostMapping("/editar-perfil")
 	public ModelAndView salvarEdicaoComerciante(@Valid Comerciante comerciante, BindingResult result,
-        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
+        @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model, RedirectAttributes attributes) {
     System.out.println("Caminho do arquivo: " + caminhoImagens);
     ModelAndView mv = new ModelAndView("cadastros/formComerciante");
     if (result.hasErrors()) {
@@ -232,10 +237,12 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
         }
 
         cr.save(comerciante);
+        attributes.addFlashAttribute("mensagem", "Atualização salvo com sucesso!");
         System.out.println("Comerciante Salvo");
     } catch (IOException e) {
         e.printStackTrace();
     }
+    
     mv.setViewName("home/index");
     return mv;
 
