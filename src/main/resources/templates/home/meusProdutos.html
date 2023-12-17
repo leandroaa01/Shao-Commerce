@@ -261,7 +261,7 @@
                     <span class="text">Comerciantes</span>
                   </a>
                 </li>
-                <li  >
+                <li>
                   <a href="#" sec:authorize="hasAuthority('ADMIN')">
                     <i class="bi bi-person-gear"></i>
                     <span class="text">Controle</span>
@@ -269,28 +269,28 @@
                   </a>
                   <ul class="sub-menu">
                     <li>
-                      <a href="#">
+                      <a href="/comerciante">
                         <i class="bi bi-person-plus"></i>
-                        <span class="text">Cadastro de Vendedores</span>
+                        <span class="text">Add de Vendedores</span>
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="/user">
                         <i class="bi bi-person-plus"></i>
-                        <span class="text">Cadastro de Usuários</span>
+                        <span class="text">Add de Usuários</span>
                       </a>
                     </li>
                     <li>
-                      <a href="/form">
+                      <a href="/admin/comerciantes">
                         <i class="bi bi-person-vcard"></i>
-                        <span class="text">Controle de Vendedores</span>
+                        <span class="text">Lista de Vendedores</span>
                       </a>
                     </li>
                     <li>
                     
-                      <a href="#">  
+                      <a href="/admin/clientes">  
                         <i class="bi bi-person-vcard"></i>
-                        <span class="text">Controle de Usuários</span>
+                        <span class="text">Lista de Usuários</span>
                       </a>
                     </li>
                   </ul>
@@ -298,7 +298,8 @@
               </ul>
             </div>
             <div class="menu">
-              <p class="title">Conta</p>
+              <p class="title" sec:authorize="hasAuthority('COMERCIANTE')" >Conta</p>
+              <p class="title" sec:authorize="hasAuthority('CLIENTE')">Conta</p>
               <ul>
                 <li>
                   <a sec:authorize="hasAuthority('COMERCIANTE')"  th:href="@{/comerciantes/editar-perfil(id=${#authentication.getPrincipal.getId()})}">

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shao Commerce - Produtos</title>
+    <title>Shao Commerce - Lista de Comerciantes</title>
 </head>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
@@ -293,18 +293,18 @@
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/comerciantes">
-                        <i class="bi bi-person-vcard"></i>
-                        <span class="text">Lista de Vendedores</span>
-                      </a>
-                    </li>
-                    <li>
-                    
-                      <a href="/admin/clientes">  
-                        <i class="bi bi-person-vcard"></i>
-                        <span class="text">Lista de Usuários</span>
-                      </a>
-                    </li>
+                        <a href="/admin/comerciantes">
+                          <i class="bi bi-person-vcard"></i>
+                          <span class="text">Lista de Vendedores</span>
+                        </a>
+                      </li>
+                      <li>
+                      
+                        <a href="/admin/clientes">  
+                          <i class="bi bi-person-vcard"></i>
+                          <span class="text">Lista de Usuários</span>
+                        </a>
+                      </li>
                   </ul>
                 </li>
               </ul>
@@ -343,27 +343,35 @@
       
       
       <div class=" col">
-        <div class="row">
-            <div class="  col p-4 "  th:each="p : ${produto}">
-                <div class="card" style="width: 17rem; height: 550px;">
-                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top"  style="height: 200px;">
-                    <div class="card-body">
-                        <h4 class="card-title" th:text="${p.nome}"  style="color: #39C81B;">Nome do Produto:</h4>
-                        <p class="card-text"><b>Categoria:</b> <span th:text="${p.categoria}"></span> </p>
-                        <p class="card-text"><b> Data de venda:</b> 
-                             <pan th:text="${#temporals.format(p.dataVenda, 'dd/MM/yyyy')}"></p>
-                         <p class="card-text"><b> Horário de venda:</b>
-                             <span th:text="${p.horario}"></span> min</p>
-                        <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
-                        <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
-                        <a th:href="@{'https://wa.me/55'+${p.comerciante.numWhats}}" class="btn btn-success float-end" target="_blank"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>  
-            <div th:if="${#lists.isEmpty(produto)}">
-                <h1 style="text-align: center; margin-top: 30%;" >Nenhum produto cadastrado</h1>
-            </div>
-
+        <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Lista de Cormerciantes</H1>
+        <table class="highlight table table-bordered m-auto" style="text-transform: uppercase;" >
+            <thead>
+                <tr>
+                <th>#</th>
+                  <th>id</th>
+                  <th>Nome </th>
+                  <th>Email</th>
+                  <th>Watsapp</th>
+                  <th>Perfil</th>  
+                  <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c: ${comerciantes}">
+                    <td>#</td>
+                    <td th:text="${c.id}">1</td>
+                    <td th:text="${c.nome}">João & Maria no Pé de Feijão </td>
+                    <td th:text="${c.email}">0000000000</td>
+                    <td th:text="${c.numWhats}">10/10/2023</td>
+                    <td th:text="${c.perfil}">10/10/2023</td>
+                    <td>
+                        <a th:href="@{/comerciantes/{id}/remover(id=${c.id})}" class="btn btn-danger" ><i class="bi bi-trash-fill"></i></a>
+                        <a th:href="@{/comerciantes/{id}/selecionar(id=${c.id})}" class="btn btn-warning" ><i class="bi bi-pen-fill"></i></a>
+                    </td>
+                </tr>
+            </tbody> 
+        </table>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"
     integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw=="
     crossorigin="anonymous"></script>

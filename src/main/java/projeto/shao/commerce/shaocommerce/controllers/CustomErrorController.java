@@ -1,3 +1,4 @@
+
 package projeto.shao.commerce.shaocommerce.controllers;
 
 
@@ -31,5 +32,4 @@ public class CustomErrorController implements ErrorController {
         return "redirect:/produtos";
 
     }
-    
 }

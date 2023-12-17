@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,15 +70,22 @@ public class AdminControlller {
 
       @GetMapping("/Comerciante")
 	public ModelAndView cadastro(Comerciante comerciante) {
-		 ModelAndView mv = new ModelAndView("cadastros/formComerciante");
+		 ModelAndView mv = new ModelAndView("admin/comerciante");
         mv.addObject("comerciante", comerciante);
         Perfil[] profiles = {Perfil.COMERCIANTE};
         mv.addObject("perfils", profiles);
         return mv;
 		
-	}
+	} @GetMapping("/user")
+    public ModelAndView formUser(Cliente cliente) {
+        ModelAndView mv = new ModelAndView("admin/cliente");
+        mv.addObject("cliente", cliente);
+        Perfil[] profiles = {Perfil.CLIENTE};
+        mv.addObject("perfils", profiles);
+        return mv;
+    }
 
-	@PostMapping("/cadastro-comerciante")
+	@PostMapping("/comerciante")
 	public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
 			@RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model) {
 		String hashSenha = PasswordUtil.encoder(comerciante.getSenha());
@@ -115,23 +123,16 @@ public class AdminControlller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        mv.setViewName("secure/login");
+        mv.setViewName("home/index");
 		return mv;
 	}
 
    
-     @GetMapping("/user")
-    public ModelAndView formUser(Cliente cliente) {
-        ModelAndView mv = new ModelAndView("cadastros/formUser");
-        mv.addObject("cliente", cliente);
-        Perfil[] profiles = {Perfil.CLIENTE};
-        mv.addObject("perfils", profiles);
-        return mv;
-    }
+    
 
-    @PostMapping("/cadastro-user")
+    @PostMapping("/user")
 	public ModelAndView salvarUser(@Valid Cliente cliente, BindingResult result) {
-          ModelAndView mv = new ModelAndView("cadastros/formUser");
+          ModelAndView mv = new ModelAndView("admin/cliente");
 		  String hashSenha = PasswordUtil.encoder(cliente.getSenha());
         cliente.setSenha(hashSenha);
         mv.addObject("cliente", cliente);
@@ -144,7 +145,25 @@ public class AdminControlller {
 			System.out.println("Cliente Salvo!");
 		
 
-		 mv.setViewName("secure/login");
+		 mv.setViewName("home/index");
+		return mv;
+	}
+
+
+	@GetMapping("/comerciantes")
+	public ModelAndView listarComerciantes() {
+		List<Comerciante> comerciantes = adm.findAll();
+		ModelAndView mv = new ModelAndView("admin/listaUser");
+		mv.addObject("comerciantes", comerciantes);
+
+		return mv;
+	}
+	@GetMapping("/clientes")
+	public ModelAndView listarClientes() {
+		List<Cliente> clientes = ad.findAll();
+		ModelAndView mv = new ModelAndView("admin/listaCliente");
+		mv.addObject("clientes", clientes);
+
 		return mv;
 	}
 
