@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,7 @@ import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
+import projeto.shao.commerce.shaocommerce.services.ComercianteUserDetailsImpl;
 
 @Controller
 @RequestMapping("/produtos")
@@ -51,6 +54,14 @@ public class ProdutosController {
 
  	@GetMapping("/{id}/cadastro")
     public String formProduto(@PathVariable Long id, Produto produto) {
+		 // Obtém o Authentication do contexto de segurança
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    // Verifica se o usuário autenticado possui a permissão adequada
+    if (!id.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
+        // Redireciona para uma página de acesso negado ou para a página inicial
+       return "redirect:/produtos"; // Substitua pelo caminho desejado
+    }
         return "cadastros/formProduto";
     }
 
@@ -136,8 +147,16 @@ public class ProdutosController {
 	}
     @GetMapping("/{idComerciante}/produtos/{idProduto}/edit-produto")
 	public ModelAndView EditProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
-
 		ModelAndView md = new ModelAndView();
+		 // Obtém o Authentication do contexto de segurança
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		 // Verifica se o usuário autenticado possui a permissão adequada
+		 if (!idComerciante.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
+			 // Redireciona para uma página de acesso negado ou para a página inicial
+			 md.setViewName("redirect:/produtos"); // Substitua pelo caminho desejado
+			 return md;
+		 }
 		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
 		Optional<Produto> optProduto = pr.findById(idProduto);
 
@@ -163,6 +182,15 @@ public class ProdutosController {
 
     @GetMapping("/{idComerciante}/produtos/{idProduto}/apagar")
 	public String apagarProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto, RedirectAttributes attributes) {
+		 // Obtém o Authentication do contexto de segurança
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		 // Verifica se o usuário autenticado possui a permissão adequada
+		 if (!idComerciante.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
+			 // Redireciona para uma página de acesso negado ou para a página inicial
+			 return  "redirect:/produtos"; // Substitua pelo caminho desejado
+			
+		 }
 
 		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
 		Optional<Produto> optProduto = pr.findById(idProduto);

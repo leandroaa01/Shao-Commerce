@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,10 @@ import projeto.shao.commerce.shaocommerce.models.Comerciante;
 import projeto.shao.commerce.shaocommerce.models.Produto;
 import projeto.shao.commerce.shaocommerce.repositories.ComercianteRepository;
 import projeto.shao.commerce.shaocommerce.repositories.ProdutoRepository;
+import projeto.shao.commerce.shaocommerce.services.ComercianteUserDetailsImpl;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
 @Controller
@@ -69,7 +74,7 @@ public class ComerciantesControllers {
 		
 	}
 
-	@PostMapping
+@PostMapping
 public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingResult result,
         @RequestParam("file") MultipartFile arquivo, @RequestParam String filePath, Model model, RedirectAttributes attributes) {
     System.out.println("Caminho do arquivo: " + caminhoImagens);
@@ -184,6 +189,17 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
 	public ModelAndView EditaComerciante(@RequestParam("id") Long id) {
 		ModelAndView md = new ModelAndView();
 		Optional<Comerciante> opt = cr.findById(id);
+
+        
+     // Obtém o Authentication do contexto de segurança
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    // Verifica se o usuário autenticado possui a permissão adequada
+    if (!id.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
+        // Redireciona para uma página de acesso negado ou para a página inicial
+        md.setViewName("redirect:/produtos"); // Substitua pelo caminho desejado
+        return md;
+    }
 		if (opt.isEmpty()) {
 			md.setViewName("redirect:/comerciantes");
 			return md;
