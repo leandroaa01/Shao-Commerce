@@ -332,10 +332,11 @@
       
       
       <div class="col">
-        <div class="alert alert-success alert-dismissible fade show m-auto pe-auto" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
-            <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+        <br th:if="${mensagem}">
+        <div th:if="${mensagem}"  class="alert alert-success alert-dismissible fade show m-auto pe-auto col-3 float-end" role="alert" style="height: 45px; border-radius: 10px; background: #08e543af;">
+           <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p> 
+           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
         <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Meus Produtos</H1>
         <div class="row">
             <div class="col  p-4 "  th:each="p : ${produtos}">

@@ -126,13 +126,13 @@ public class ProdutosController {
 			Comerciante comerciante = opt.get();   
 			produto.setComerciante(comerciante);
 			pr.save(produto);
+			attributes.addFlashAttribute("msg","fgfgfgfghf" );
 			attributes.addFlashAttribute("mensagem", "Produto salvo com sucesso!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-
-		return "redirect:/produtos/meus-produtos";
+		return "redirect:/produtos";
 	}
     @GetMapping("/{idComerciante}/produtos/{idProduto}/edit-produto")
 	public ModelAndView EditProduto(@PathVariable Long idComerciante, @PathVariable Long idProduto) {
@@ -174,11 +174,12 @@ public class ProdutosController {
 			if (comerciante.getId() == produto.getComerciante().getId()) {
 				pr.delete(produto);
 				attributes.addFlashAttribute("mensagem", "Produto deletado com sucesso!");
+				
 			}
 		}
 		
 
-		return "redirect:/produtos/{idComerciante}";
+		return "redirect:/produtos";
 	}
 
 	@GetMapping("/meus-produtos")

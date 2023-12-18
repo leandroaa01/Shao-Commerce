@@ -343,8 +343,12 @@
       
       
       <div class=" col">
-        <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Lista de Cormerciantes</H1>
-        <p th:if="${mensagem}" th:text="${mensagem}"></p>
+        <br th:if="${mensagem}">
+         <div th:if="${mensagem}"  class="alert alert-success alert-dismissible fade show m-auto pe-auto col-3 float-end" role="alert" style="height: 45px; border-radius: 10px; background: #08e543af;">
+            <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Lista de Comerciantes</H1>
         <table class="highlight table table-bordered m-auto" style="text-transform: uppercase;" >
             <thead>
                 <tr>

@@ -58,10 +58,11 @@
 <body>
     
  <section class="container" >
-    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${mensagem}" style="height: 50px; border-radius: 3px;">
-        <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+    
+    <div th:if="${mensagem}"  class="alert alert-success alert-dismissible fade show m-auto pe-auto " role="alert" style="height: 45px; border-radius: 10px; background: #08e543af;">
+       <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p> 
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
     <form method="post" th:action="@{/login}">
         <img src="/img/favicon.png"  class="img-thumbnail  mx-auto d-block">
         <div class="form-floating mb-3 col ">
