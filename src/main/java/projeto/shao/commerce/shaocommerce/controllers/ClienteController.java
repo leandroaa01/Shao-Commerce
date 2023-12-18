@@ -100,7 +100,7 @@ public class ClienteController {
         System.out.println("Atualização Salvo");
 		attributes.addFlashAttribute("mensagem", "Atualização salvo com sucesso!");
     
-    mv.setViewName("home/index");
+	mv.setViewName("redirect:/produtos");
     return mv;
 
 }

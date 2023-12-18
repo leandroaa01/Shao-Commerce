@@ -243,7 +243,7 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
         e.printStackTrace();
     }
     
-    mv.setViewName("home/index");
+    mv.setViewName("redirect:/produtos");
     return mv;
 
 }

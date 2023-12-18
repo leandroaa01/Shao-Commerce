@@ -16,8 +16,10 @@ public class ComercianteUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Comerciante comerciante = cr.findByEmail(email)
-        .orElseThrow( () -> new UsernameNotFoundException("Usuário não foi encontrado na base de dados"));
+        Comerciante comerciante = cr.findByEmail(email);
+        if(comerciante == null){
+        throw new UsernameNotFoundException("Usuário não foi encontrado na base de dados");
+    }
         return new ComercianteUserDetailsImpl(comerciante);
     }
 

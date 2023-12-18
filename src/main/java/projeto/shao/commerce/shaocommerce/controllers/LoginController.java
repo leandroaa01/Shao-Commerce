@@ -66,11 +66,11 @@ public class LoginController {
 			return cadastro(comerciante);
 		}
 
-		// Comerciante email = cr.findByEmail(comerciante.getEmail());
-		// if (email != null && !email.getId().equals(comerciante.getId())) {
-		// 	result.rejectValue("email", "error.matricula", "Email já está em uso.");
-		// 	return cadastro(comerciante);
-		// }
+		Comerciante email = cr.findByEmail(comerciante.getEmail());
+		 if (email != null && !email.getId().equals(comerciante.getId())) {
+		 	result.rejectValue("email", "error.matricula", "Email já está em uso.");
+		 	return cadastro(comerciante);
+		 }
 
 		try {
 			if (arquivo != null && !arquivo.isEmpty()) {
@@ -130,6 +130,11 @@ public class LoginController {
 		if (result.hasErrors()) {
 			return formUser(cliente);
 		}
+		Cliente email = cl.findByEmail(cliente.getEmail());
+		 if (email != null && !email.getId().equals(cliente.getId())) {
+		 	result.rejectValue("email", "error.matricula", "Email já está em uso.");
+		 	return formUser(cliente);
+		 }
 		
 			cl.save(cliente);
 			System.out.println("Cliente Salvo!");

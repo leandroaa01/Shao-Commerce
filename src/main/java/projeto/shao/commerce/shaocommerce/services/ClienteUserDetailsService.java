@@ -16,8 +16,10 @@ public class ClienteUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Cliente cliente = cl.findByEmail(email)
-        .orElseThrow( () -> new UsernameNotFoundException("Usuário não foi encontrado na base de dados"));
+        Cliente cliente = cl.findByEmail(email);
+        if(cliente == null){
+            throw new UsernameNotFoundException("Usuário não foi encontrado na base de dados");
+        }
         return new ClienteUserDetailsImpl(cliente);
     }
 
