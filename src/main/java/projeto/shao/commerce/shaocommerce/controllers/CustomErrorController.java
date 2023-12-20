@@ -22,14 +22,20 @@ public class CustomErrorController implements ErrorController {
         Integer statusCode = Integer.parseInt(status.toString());
 
           if(statusCode == HttpStatus.NOT_FOUND.value()){
-           return "redirect:/produtos";
-        }  else if (statusCode == 999 ) {
-            return "redirect:/produto";
-        }
+           return "error/403";
+        }  else if (statusCode == HttpStatus.NOT_FOUND.value()) {
+            return "error/404";
+        } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+            return "error/500";
+        } else if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
+            return "error/503";
+        } else if (statusCode == 999) {
+            return "error/999";
+        } 
 
        
 
-        return "redirect:/produtos";
+        return "error/999";
 
     }
 }
