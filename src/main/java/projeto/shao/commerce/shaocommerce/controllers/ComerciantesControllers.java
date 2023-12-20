@@ -196,7 +196,7 @@ public ModelAndView salvarComerciante(@Valid Comerciante comerciante, BindingRes
     // Verifica se o usuário autenticado possui a permissão adequada
     if (!id.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
         // Redireciona para uma página de acesso negado ou para a página inicial
-        md.setViewName("redirect:/produtos"); // Substitua pelo caminho desejado
+        md.setViewName("error/403"); // Substitua pelo caminho desejado
         return md;
     }
 		if (opt.isEmpty()) {

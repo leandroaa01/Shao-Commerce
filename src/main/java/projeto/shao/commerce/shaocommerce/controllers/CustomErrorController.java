@@ -22,9 +22,9 @@ public class CustomErrorController implements ErrorController {
         Integer statusCode = Integer.parseInt(status.toString());
 
           if(statusCode == HttpStatus.NOT_FOUND.value()){
-           return "error/403";
+           return "error/404";
         }  else if (statusCode == HttpStatus.NOT_FOUND.value()) {
-            return "error/404";
+            return "error/403";
         } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
             return "error/500";
         } else if (statusCode == HttpStatus.SERVICE_UNAVAILABLE.value()) {
@@ -35,7 +35,7 @@ public class CustomErrorController implements ErrorController {
 
        
 
-        return "error/999";
+        return "error/500";
 
     }
 }

@@ -352,10 +352,11 @@
         <div class="row">
 
             <div class="  col p-4 "  th:each="p : ${produto}">
-                <div class="card" style="width: 17rem; height: 550px;">
-                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top"  style="height: 200px;">
+                <div class="card" style="width: 17rem; height: 580px;">
+                    <img th:src="@{'/uploadProduto/'+ ${p.caminhoImg}}" class="card-img-top"  style="height: 220px;">
                     <div class="card-body">
                         <h4 class="card-title" th:text="${p.nome}"  style="color: #39C81B;">Nome do Produto:</h4>
+                        <p class="card-text"><b>Vendedor:</b> <a class="badge text-bg-success" th:href="@{/produtos/{id}(id=${p.comerciante.id})}" style="text-decoration: none; color: #44fa20;" ><span th:text="${p.comerciante.nome}"></span></a> </p>
                         <p class="card-text"><b>Categoria:</b> <span th:text="${p.categoria}"></span> </p>
                         <p class="card-text"><b> Data de venda:</b> 
                              <pan th:text="${#temporals.format(p.dataVenda, 'dd/MM/yyyy')}"></p>
@@ -363,7 +364,7 @@
                              <span th:text="${p.horario}"></span> min</p>
                         <p class="card-text"><b>Preço</b>: <span th:text="${#numbers.formatDecimal(p.preco, 1, 2)}"></span> R$</p>
                         <p class="card-text"><b>Descrição:</b> <span th:text="${p.descricao}"></span></p>
-                        <a th:href="@{'https://wa.me/55'+${p.comerciante.numWhats}}" class="btn btn-success float-end" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                        <a th:href="@{'https://wa.me/55'+${p.comerciante.nome}}" class="btn btn-success float-end" target="_blank"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>  

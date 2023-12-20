@@ -60,7 +60,7 @@ public class ProdutosController {
     // Verifica se o usuário autenticado possui a permissão adequada
     if (!id.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
         // Redireciona para uma página de acesso negado ou para a página inicial
-       return "redirect:/produtos"; // Substitua pelo caminho desejado
+       return "error/403"; // Substitua pelo caminho desejado
     }
         return "cadastros/formProduto";
     }
@@ -154,7 +154,7 @@ public class ProdutosController {
 		 // Verifica se o usuário autenticado possui a permissão adequada
 		 if (!idComerciante.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
 			 // Redireciona para uma página de acesso negado ou para a página inicial
-			 md.setViewName("redirect:/produtos"); // Substitua pelo caminho desejado
+			 md.setViewName("error/403");
 			 return md;
 		 }
 		Optional<Comerciante> optComerciante = cr.findById(idComerciante);
@@ -188,7 +188,7 @@ public class ProdutosController {
 		 // Verifica se o usuário autenticado possui a permissão adequada
 		 if (!idComerciante.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
 			 // Redireciona para uma página de acesso negado ou para a página inicial
-			 return  "redirect:/produtos"; // Substitua pelo caminho desejado
+			 return  "error/403"; 
 			
 		 }
 
@@ -214,7 +214,14 @@ public class ProdutosController {
 	public ModelAndView meusProdutos(@RequestParam("id") Long id,Produto produto) {
 		Optional<Comerciante> opt = cr.findById(id);
 		ModelAndView md = new ModelAndView();
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+		 // Verifica se o usuário autenticado possui a permissão adequada
+		 if (!id.equals(((ComercianteUserDetailsImpl) authentication.getPrincipal()).getId())) {
+			 // Redireciona para uma página de acesso negado ou para a página inicial
+			 md.setViewName("error/403");
+			 return md;
+		 }
 		if (opt.isEmpty()) {
 			md.setViewName("redirect:/produtos");
 			return md;
