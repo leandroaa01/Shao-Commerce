@@ -76,7 +76,9 @@ public class ProdutosController {
 		}
 
 		Comerciante comerciante = opt.get();
+		String nameComerciante = comerciante.getNome();
 		md.addObject("comerciante", comerciante);
+		md.addObject("nameComerciante", nameComerciante);
 
 		List<Produto> produtos = pr.findByComerciante(comerciante);
 		md.addObject("produtos", produtos);

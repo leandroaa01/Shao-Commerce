@@ -325,6 +325,12 @@
                     <span class="text">Editar Perfil</span>
                   </a>
                 </li>
+                <!-- <li>
+                  <a  th:href="@{/redefinir-senha}">
+                    <i class="bi bi-person-lock"></i>
+                    <span class="text">Redefinição de Senha</span>
+                  </a>
+                </li> -->
                 </li>
               </ul>
             </div>
@@ -348,7 +354,7 @@
             <p><strong>Aviso:</strong> <span  th:text="${mensagem}"></span></p> 
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-        <H1 class="text text-center m-5" style="color: #44fa20;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Todos os Produtos</H1>
+        <H1 class="text text-center m-5" style="color: #39C81B;  line-height: 30px; font-weight: 900; font-family: sans-serif;" >Todos os Produtos</H1>
         <div class="row">
 
             <div class="  col p-4 "  th:each="p : ${produto}">
