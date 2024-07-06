@@ -14,7 +14,7 @@
 <br>
 
 <p align="center">
-  <img alt="projeto DevLinks" src="https://github.com/PeterKart/Shao-commerce/blob/main/src/main/resources/static/img/preview.png" width="100%">
+  <img alt="projeto Shao Commerce" src="https://github.com/PeterKart/Shao-commerce/blob/main/src/main/resources/static/img/preview.png" width="100%">
 </p>
 
 ## 🚀 Tecnologias
@@ -23,6 +23,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - HTML e CSS
 - JavaScript
+- Spring boot
 - Git e Github
 - Figma
 
